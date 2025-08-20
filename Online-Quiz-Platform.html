@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Exam</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#4f46e5',secondary:'#818cf8'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+body {
+font-family: 'Inter', sans-serif;
+background-color: #f9fafb;
+}
+@media (max-width: 768px) {
+.max-w-3xl {
+margin: 1rem;
+}
+.p-8 {
+padding: 1rem;
+}
+.text-3xl {
+font-size: 1.5rem;
+}
+.flex-col {
+gap: 1rem;
+}
+.space-x-8 > * + * {
+margin-left: 1rem;
+}
+}
+@media (max-width: 640px) {
+.flex-col md\:flex-row {
+flex-direction: column;
+}
+.space-x-4 {
+gap: 0.5rem;
+}
+.px-8 {
+padding-left: 1rem;
+padding-right: 1rem;
+}
+}
+.custom-radio input[type="radio"] {
+display: none;
+}
+.custom-radio input[type="radio"] + label {
+position: relative;
+padding-left: 2.5rem;
+cursor: pointer;
+display: inline-block;
+line-height: 1.5;
+}
+.custom-radio input[type="radio"] + label:before {
+content: '';
+position: absolute;
+left: 0;
+top: 0;
+width: 1.5rem;
+height: 1.5rem;
+border: 2px solid #d1d5db;
+border-radius: 50%;
+background: #fff;
+}
+.custom-radio input[type="radio"]:checked + label:after {
+content: '';
+position: absolute;
+left: 0.375rem;
+top: 0.375rem;
+width: 0.75rem;
+height: 0.75rem;
+border-radius: 50%;
+background: #4f46e5;
+}
+.custom-radio input[type="radio"]:checked + label:before {
+border-color: #4f46e5;
+}
+.timer-warning {
+animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+0% { opacity: 1; }
+50% { opacity: 0.5; }
+100% { opacity: 1; }
+}
+.progress-bar {
+height: 0.5rem;
+background-color: #e5e7eb;
+border-radius: 9999px;
+overflow: hidden;
+}
+.progress-bar-inner {
+height: 100%;
+background-color: #4f46e5;
+border-radius: 9999px;
+transition: width 0.3s ease;
+}
+.answer-review.correct {
+border-left: 4px solid #10b981;
+}
+.answer-review.incorrect {
+border-left: 4px solid #ef4444;
+}
+</style>
+</head>
+<body>
+<div class="min-h-screen flex flex-col">
+<!-- Landing Page -->
+<div id="landing-page" class="flex-1 flex flex-col">
+<header class="bg-white shadow-sm">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+<div class="text-2xl">
+  <img src="C:\Users\ADMIN\Downloads\logo-removebg-preview.png" alt="Saif Logo" class="h-10">
+</div>
+<nav>
+<ul class="flex space-x-8">
+<li><a href="#" class="text-gray-700 hover:text-primary font-medium">Home</a></li>
+<li><a href="#" class="text-gray-700 hover:text-primary font-medium">About</a></li>
+<li><a href="#" class="text-gray-700 hover:text-primary font-medium">Contact</a></li>
+</ul>
+</nav>
+</div>
+</header>
+<main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 bg-gradient-to-b from-white to-gray-50">
+<div class="max-w-3xl w-full mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+<div class="p-8 md:p-12">
+<h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6 text-center">Online Exam</h1>
+<div class="bg-blue-50 rounded-lg p-6 mb-8">
+<h2 class="text-xl font-semibold text-gray-800 mb-3">Instructions:</h2>
+<ul class="space-y-2 text-gray-700">
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mr-2 mt-0.5">
+<i class="ri-checkbox-circle-line text-primary"></i>
+</div>
+<span>This exam contains <strong>50 multiple-choice questions</strong></span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mr-2 mt-0.5">
+<i class="ri-time-line text-primary"></i>
+</div>
+<span>You have <strong>90 minutes</strong> to complete the exam</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mr-2 mt-0.5">
+<i class="ri-arrow-left-right-line text-primary"></i>
+</div>
+<span>You can navigate between questions using the Previous and Next buttons</span>
+</li>
+<li class="flex items-start">
+<div class="w-5 h-5 flex items-center justify-center mr-2 mt-0.5">
+<i class="ri-check-double-line text-primary"></i>
+</div>
+<span>Each correct answer is worth <strong>1 point</strong></span>
+</li>
+</ul>
+</div>
+<div class="flex items-center justify-center space-x-4 mb-6">
+<div class="text-center">
+<div class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 mx-auto mb-2">
+<div class="w-6 h-6 flex items-center justify-center text-primary">
+<i class="ri-question-line ri-lg"></i>
+</div>
+</div>
+<p class="text-sm text-gray-700">50 Questions</p>
+</div>
+<div class="text-center">
+<div class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 mx-auto mb-2">
+<div class="w-6 h-6 flex items-center justify-center text-primary">
+<i class="ri-time-line ri-lg"></i>
+</div>
+</div>
+<p class="text-sm text-gray-700">90 Minutes</p>
+</div>
+<div class="text-center">
+<div class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 mx-auto mb-2">
+<div class="w-6 h-6 flex items-center justify-center text-primary">
+<i class="ri-trophy-line ri-lg"></i>
+</div>
+</div>
+<p class="text-sm text-gray-700">50 Points</p>
+</div>
+</div>
+<div class="text-center">
+<button id="start-quiz-btn" class="bg-primary hover:bg-indigo-700 text-white font-medium py-3 px-8 rounded-button transition duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 whitespace-nowrap">
+Start Quiz
+</button>
+</div>
+</div>
+</div>
+</main>
+<footer class="bg-gray-800 text-white py-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col md:flex-row justify-between items-center">
+<div class="mb-4 md:mb-0">
+<div class="text-2xl">
+</div>
+<p class="text-gray-400 text-sm" style="text-align: center;">Test your knowledge with our interactive quizzes</p>
+</div>
+<div class="flex space-x-6">
+<a href="#" class="text-gray-400 hover:text-white">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-facebook-fill"></i>
+</div>
+</a>
+<a href="#" class="text-gray-400 hover:text-white">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-twitter-fill"></i>
+</div>
+</a>
+<a href="#" class="text-gray-400 hover:text-white">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-instagram-fill"></i>
+</div>
+</a>
+</div>
+</div>
+<div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400 text-sm">
+© 2025 Quiz Platform. All rights reserved.
+</div>
+</div>
+</footer>
+</div>
+<!-- Quiz Interface -->
+<div id="quiz-container" class="hidden flex-1 flex flex-col">
+<header class="bg-white shadow-sm sticky top-0 z-10">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+<div class="text-2xl">
+  <img src="img/logo.png" alt="Saif Logo" class="h-10">
+</div>
+<div id="timer" class="px-4 py-2 bg-white rounded-lg shadow-sm border border-gray-200 flex items-center">
+<div class="w-5 h-5 flex items-center justify-center mr-2">
+<i class="ri-time-line text-primary"></i>
+</div>
+<span id="time-display" class="font-mono text-lg font-medium">90:00</span>
+</div>
+</div>
+</header>
+<main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 bg-gradient-to-b from-white to-gray-50">
+<div class="max-w-3xl w-full mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+<div class="p-8">
+<div class="flex items-center justify-between mb-6">
+<div class="text-sm font-medium text-gray-500">
+Question <span id="current-question">1</span> of <span id="total-questions">50</span>
+</div>
+</div>
+<div class="progress-bar mb-8">
+<div id="progress-bar-inner" class="progress-bar-inner" style="width: 2%;"></div>
+</div>
+<div id="question-container" class="mb-8">
+<h2 id="question-text" class="text-xl md:text-2xl font-semibold text-gray-900 mb-6">Which of the following most accurately defines Environmental Studies?</h2>
+<div id="options-container" class="space-y-4">
+<div class="custom-radio">
+<input type="radio" id="option-1" name="answer" value="0">
+<label for="option-1" class="text-gray-700 hover:text-gray-900">Study of economics</label>
+</div>
+<div class="custom-radio">
+<input type="radio" id="option-2" name="answer" value="1">
+<label for="option-2" class="text-gray-700 hover:text-gray-900">Study of interactions between humans and the environment</label>
+</div>
+<div class="custom-radio">
+<input type="radio" id="option-3" name="answer" value="2">
+<label for="option-3" class="text-gray-700 hover:text-gray-900">Study of political science</label>
+</div>
+<div class="custom-radio">
+<input type="radio" id="option-4" name="answer" value="3">
+<label for="option-4" class="text-gray-700 hover:text-gray-900">Study of human history</label>
+</div>
+</div>
+</div>
+<div class="flex justify-between">
+<button id="prev-btn" class="bg-white border border-gray-300 text-gray-700 font-medium py-2 px-6 rounded-button hover:bg-gray-50 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 whitespace-nowrap"><div class="flex items-center">
+<div class="w-5 h-5 flex items-center justify-center mr-1">
+<i class="ri-arrow-left-line"></i>
+</div>
+Previous
+</div>
+</button>
+<button id="next-btn" class="bg-primary hover:bg-indigo-700 text-white font-medium py-2 px-6 rounded-button transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 whitespace-nowrap">
+<div class="flex items-center">
+Next
+<div class="w-5 h-5 flex items-center justify-center ml-1">
+<i class="ri-arrow-right-line"></i>
+</div>
+</div>
+</button>
+<button id="submit-btn" class="hidden bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-button transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 whitespace-nowrap">
+<div class="flex items-center">
+Submit Quiz
+<div class="w-5 h-5 flex items-center justify-center ml-1">
+<i class="ri-check-line"></i>
+</div>
+</div>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Results Page -->
+<div id="results-container" class="hidden flex-1 flex flex-col">
+<header class="bg-white shadow-sm">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+<div class="text-2xl">
+  <img src="D:\portfolio\img\logo.png" alt="Saif Logo" class="h-10">
+</div>
+</div>
+</header>
+<main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 bg-gradient-to-b from-white to-gray-50">
+<div class="max-w-3xl w-full mx-auto">
+<div class="bg-white shadow-lg rounded-lg overflow-hidden mb-8">
+<div class="p-8">
+<h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">Quiz Results</h1>
+<div class="flex flex-col md:flex-row justify-center items-center gap-8 mb-8">
+<div class="bg-indigo-50 rounded-lg p-6 text-center w-full md:w-1/3">
+<div class="text-5xl font-bold text-primary mb-2"><span id="score-display">0</span>/<span id="max-score">50</span></div>
+<p class="text-gray-700">Your Score</p>
+</div>
+<div class="bg-indigo-50 rounded-lg p-6 text-center w-full md:w-1/3">
+<div class="text-5xl font-bold text-primary mb-2"><span id="percentage-display">0</span>%</div>
+<p class="text-gray-700">Percentage</p>
+</div>
+<div class="bg-indigo-50 rounded-lg p-6 text-center w-full md:w-1/3">
+<div class="text-5xl font-bold text-primary mb-2"><span id="time-taken">00:00</span></div>
+<p class="text-gray-700">Time Taken</p>
+</div>
+</div>
+<div class="flex justify-center mb-8">
+<div class="inline-flex rounded-md shadow-sm" role="group">
+<button id="show-all-btn" class="bg-primary text-white px-4 py-2 rounded-l-button font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 whitespace-nowrap">
+All Questions
+</button>
+<button id="show-correct-btn" class="bg-white border-y border-r border-gray-300 text-gray-700 px-4 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 whitespace-nowrap">
+Correct Only
+</button>
+<button id="show-incorrect-btn" class="bg-white border-y border-r border-gray-300 text-gray-700 px-4 py-2 rounded-r-button font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 whitespace-nowrap">
+Incorrect Only
+</button>
+</div>
+</div>
+<div id="answers-review" class="space-y-6 max-h-96 overflow-y-auto pr-2">
+<!-- Answer reviews will be populated here -->
+</div>
+</div>
+</div>
+<div class="text-center">
+<button id="restart-quiz-btn" class="bg-primary hover:bg-indigo-700 text-white font-medium py-3 px-8 rounded-button transition duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 whitespace-nowrap">
+Restart Quiz
+</button>
+</div>
+</div>
+</main>
+<footer class="bg-gray-800 text-white py-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col md:flex-row justify-between items-center">
+<div class="mb-4 md:mb-0">
+<div class="text-2xl">
+  <img src="img/logo.png" alt="Saif Logo" class="h-10">
+</div>
+<p class="text-gray-400 text-sm">Test your knowledge with our interactive quizzes</p>
+</div>
+<div class="flex space-x-6">
+<a href="#" class="text-gray-400 hover:text-white">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-facebook-fill"></i>
+</div>
+</a>
+<a href="#" class="text-gray-400 hover:text-white">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-twitter-fill"></i>
+</div>
+</a>
+<a href="#" class="text-gray-400 hover:text-white">
+<div class="w-6 h-6 flex items-center justify-center">
+<i class="ri-instagram-fill"></i>
+</div>
+</a>
+</div>
+</div>
+<div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400 text-sm">
+© 2025 Quiz Platform. All rights reserved.
+</div>
+</div>
+</footer>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+const questionPool = [
+  {
+    question: "What is meant by ‘value’?",
+    options: ["Price of a product", "Moral principles and beliefs that guide behaviour", "Market demand", "Economic supply"],
+    correctAnswer: 1
+  },
+  {
+    question: "Values are usually acquired through:",
+    options: ["Birth", "Education and experience", "Genetics", "Wealth"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which one of the following is an example of moral value?",
+    options: ["Experience", "Integrity", "Intelligence", "Wealth"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which of the following is a characteristic of values?",
+    options: ["Temporary", "Change frequently", "Guide behavior and decision-making", "Always inherited"],
+    correctAnswer: 2
+  },
+  {
+    question: "Values that relate to beliefs in religion or spirituality are:",
+    options: ["Political values", "Social values", "Economic values", "Religious values"],
+    correctAnswer: 3
+  },
+  {
+    question: "Which value is a common factor towards respect for elders and traditions?",
+    options: ["Personal value", "Moral value", "Cultural value", "Spiritual value"],
+    correctAnswer: 2
+  },
+  {
+    question: "The process of teaching and acquiring values is known as:",
+    options: ["Socialization", "Valuation", "Moral policing", "Standardization"],
+    correctAnswer: 0
+  },
+  {
+    question: "Which of the following is an economic value?",
+    options: ["Equality", "Honesty", "Wealth creation", "Faith"],
+    correctAnswer: 2
+  },
+  {
+    question: " “Honesty is the best policy” is an example of:",
+    options: ["Social norm", "Value statement", "Fact", "Rule"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which type of value influences how a person behaves in personal life?",
+    options: ["Social value", "Political value", "Personal value", "Cultural value"],
+    correctAnswer: 2
+  },
+  {
+    question: "Universal values are those which:",
+    options: ["Change from person to person", "Are accepted globally", "Are related to political beliefs", "Are taught in school only"],
+    correctAnswer: 1
+  },
+  {
+    question: "Respect for others, kindness, and empathy are considered:",
+    options: ["Religious values", "Economic values", "Social values", "Political values"],
+    correctAnswer: 2
+  },
+  {
+    question: "A student working hard to score good marks shows which value?",
+    options: ["Aesthetic", "Spiritual", "Educational", "Economic"],
+    correctAnswer: 2
+  },
+  {
+    question: "Values can be best developed through:",
+    options: ["Law enforcement", "Strict rules", "Role modeling and education", "Punishment"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which type of values guide professional ethics and standards?",
+    options: ["Cultural values", "Vocational values", "Social values", "Physical values"],
+    correctAnswer: 1
+  },
+  {
+    question: "Value-Based Education helps in developing:",
+    options: ["Only cognitive skills", "Only physical strength", "A complete personality", "Scientific attitude"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which is a core component of Value-Based Education?",
+    options: ["Competitive spirit", "Academic syllabus only", "Character building", "Exam-oriented study"],
+    correctAnswer: 2
+  },
+  {
+    question: "Value-Based Education focuses on the development of:",
+    options: ["Only IQ", "Only physical health", "IQ, EQ, and moral values", "Financial literacy"],
+    correctAnswer: 2
+  },
+  {
+    question: "Who plays the most crucial role in Value-Based Education?",
+    options: ["Principal", "Parents only", "Teachers", "Government"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of the following is a universal value taught through VBE?",
+    options: ["Corruption", "Justice", "Inequality", "Manipulation"],
+    correctAnswer: 1
+  },
+  {
+    question: "One important objective of Value-Based Education is:",
+    options: ["Social fragmentation", "Exploitation", "Harmony and peace", "Technological dominance"],
+    correctAnswer: 2
+  },
+  {
+    question: "What is meant by \"Value\" in education?",
+    options: ["Material worth", "Ethical principle guiding behavior", "Price of education", "Currency"],
+    correctAnswer: 1
+  },
+  {
+    question: "Value-Based Education leads to:",
+    options: ["Robotic behavior", "Blind obedience", "Development of conscience", "Restriction of thoughts"],
+    correctAnswer: 2
+  },
+  {
+    question: "The foundation of Value-Based Education lies in:",
+    options: ["Technology", "Scientific discovery", "Human values and ethics", "Historical facts"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of the following methods is used in Value-Based Education?",
+    options: ["Objective tests only", "Practical training in labs", "Debates and discussions on moral issues", "MCQ tests"],
+    correctAnswer: 2
+  },
+  {
+    question: "Value-Based Education promotes:",
+    options: ["Only cognitive development", "Only personal relationships", "Complete personality development", "Financial literacy"],
+    correctAnswer: 2
+  },
+  {
+    question: "Who plays the most important role in the early inculcation of values in children?",
+    options: ["Teachers", "Friends", "Parents", "Society"],
+    correctAnswer: 2
+  },
+  {
+    question: "Teachers can inculcate values most effectively through:",
+    options: ["Lectures only", "Punishment", "Their behavior and example", "Strict rules"],
+    correctAnswer: 2
+  },
+  {
+    question: "Peer groups influence value formation most strongly during:",
+    options: ["Infancy", "Childhood", "Adolescence", "Old age"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of the following is a method for teachers to inculcate values?",
+    options: ["Memorization", "Role modelling", "Shouting", "Grading"],
+    correctAnswer: 1
+  },
+  {
+    question: "Parents fail in inculcating values when they:",
+    options: ["Are strict", "Practice what they preach", "Ignore children’s moral development", "Guide children positively"],
+    correctAnswer: 2
+  },
+  {
+    question: "Mass media is a part of:",
+    options: ["A Peer group", "Society", "School", "Religion"],
+    correctAnswer: 1
+  },
+  {
+    question: "A school assembly helps inculcate values like:",
+    options: ["Jealousy", "Individualism", "Respect, discipline, and unity", "Rebellion"],
+    correctAnswer: 2
+  },
+  {
+    question: "A child learns honesty best from:",
+    options: ["TV", "Siblings", "Parents' actions", "Class tests"],
+    correctAnswer: 2
+  },
+  {
+    question: "The best way to create value-rich society is to:",
+    options: ["Enforce strict punishments", "Encourage value education at all levels", "Promote only cultural programs", "Avoid digital learning"],
+    correctAnswer: 1
+  },
+  {
+    question: "What does the term “value” primarily refer to?",
+    options: ["Emotional reactions", "Scientific knowledge", "Judgments of what is important", "Educational qualifications"],
+    correctAnswer: 2
+  },
+  {
+    question: "Values are generally developed through:",
+    options: ["Inheritance", "Personal preferences", "Social interactions", "Physical training"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of the following is a moral value?",
+    options: ["Honesty", "Intelligence", "Skill", "Strength"],
+    correctAnswer: 0
+  },
+  {
+    question: "Which classification includes aesthetic, moral, and spiritual values?",
+    options: ["Economic values", "Universal values", "Personal values", "Human values"],
+    correctAnswer: 3
+  },
+  {
+    question: "Who said “A value is a conception, explicit or implicit, distinctive of an individual or characteristic of a group”?",
+    options: ["Rokeach", "Dewey", "Morris", "Spranger"],
+    correctAnswer: 2
+  },
+  {
+    question: "Values can be:",
+    options: ["Always inherited", "Learned and developed", "Taught only in school", "Impossible to change"],
+    correctAnswer: 1
+  },
+  {
+    question: "Spiritual values promote:",
+    options: ["Competition", "Selfishness", "Inner growth and peace", "Professional success"],
+    correctAnswer: 2
+  },
+  {
+    question: "Patriotism is an example of:",
+    options: ["Economic value", "Civic value", "Physical value", "Personal value"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which value classification involves truthfulness, integrity, and compassion?",
+    options: ["Aesthetic", "Spiritual", "Moral", "Economic"],
+    correctAnswer: 2
+  },
+  {
+    question: "Social values are primarily important for:",
+    options: ["Individual growth", "Financial security", "Harmonious living", "Physical fitness"],
+    correctAnswer: 2
+  },
+  {
+    question: "The primary aim of value-based education is to:",
+    options: ["Improve literacy", "Promote scientific knowledge", "Develop human values", "Enhance technical skills"],
+    correctAnswer: 2
+  },
+  {
+    question: "Content of value education includes:",
+    options: ["Moral stories", "Mathematical equations", "Historical dates", "Scientific theories"],
+    correctAnswer: 0
+  },
+  {
+    question: "A child learning empathy in school is an outcome of:",
+    options: ["Civic education", "Physical education", "Value-based education", "Technical education"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of the following is most aligned with value-based education?",
+    options: ["Ranking system", "Competition", "Cooperation", "Business studies"],
+    correctAnswer: 2
+  },
+  {
+    question: "Who plays the most influential role in early value inculcation?",
+    options: ["Friends", "Society", "Teachers", "Parents"],
+    correctAnswer: 3
+  },
+  {
+    question: "Teachers can best inculcate values by:",
+    options: ["Assigning homework", "Using fear", "Being role models", "Giving punishments"],
+    correctAnswer: 2
+  },
+  {
+    question: "Peer groups influence values through:",
+    options: ["Isolation", "Interaction and imitation", "Discipline", "Evaluation"],
+    correctAnswer: 1
+  },
+  {
+    question: "Society contributes to value inculcation by:",
+    options: ["Restricting freedom", "Encouraging materialism", "Providing norms and examples", "Promoting individualism"],
+    correctAnswer: 2
+  },
+  {
+    question: "Value inculcation is best achieved through:",
+    options: ["Forced learning", "Daily life experiences", "Online games", "Mobile phones"],
+    correctAnswer: 1
+  },
+  {
+    question: "What does the term “value” in education refer to?",
+    options: ["Material worth", "Ethical principle guiding behavior", "Price of education", "Currency"],
+    correctAnswer: 1
+  },
+  {
+    question: "Value-based education emphasizes:",
+    options: ["Theory over practice", "Rote learning", "Holistic development", "Physical training"],
+    correctAnswer: 2
+  },
+  {
+    question: "In value-based education, which method is most effective?",
+    options: ["Punishment", "Indoctrination", "Role modeling", "Competitive tests"],
+    correctAnswer: 2
+  },
+  {
+    question: "Value-based education aligns closely with:",
+    options: ["Ethical living", "Technological innovation", "Business modeling", "Sports ranking"],
+    correctAnswer: 0
+  },
+  {
+    question: "A curriculum rich in values helps promote:",
+    options: ["Memory power", "Mechanical learning", "Holistic human development", "Institutional profits"],
+    correctAnswer: 2
+  },
+  {
+    question: "The National Policy on Education stresses:",
+    options: ["Vocational training only", "Science and technology", "Integration of values in education", "Privatization of schools"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of the following values is important in a democratic society?",
+    options: ["Obedience", "Apathy", "Responsibility", "Fear"],
+    correctAnswer: 2
+  },
+  {
+    question: "Content of value education includes:",
+    options: ["Moral stories", "Mathematical equations", "Historical dates", "Scientific theories"],
+    correctAnswer: 0
+  },
+  {
+    question: "Which characteristic is associated with value-based education?",
+    options: ["Materialism", "Moral instruction", "Economic training", "Political theory"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which of the following is NOT a component of value-based education?",
+    options: ["Personal development", "Social justice", "Ethical reasoning", "Industrial training"],
+    correctAnswer: 3
+  },
+  {
+    question: "Value-based education nurtures:",
+    options: ["Selfishness", "Arrogance", "Altruism", "Isolation"],
+    correctAnswer: 2
+  },
+  {
+    question: "Character-building is a:",
+    options: ["Physical process", "Scientific process", "Psychological outcome", "Value education goal"],
+    correctAnswer: 3
+  },
+  {
+    question: "Which method is commonly used in value-based teaching?",
+    options: ["Debate", "Memorization", "Dictation", "Experimentation"],
+    correctAnswer: 0
+  },
+  {
+    question: "Value-based education aligns closely with:",
+    options: ["Ethical living", "Technological innovation", "Business modeling", "Sports ranking"],
+    correctAnswer: 0
+  },
+  {
+    question: "Which family member influences emotional and moral growth the most?",
+    options: ["Cousin", "Father", "Grandfather", "Mother"],
+    correctAnswer: 3
+  },
+  {
+    question: "School curriculum should integrate values through:",
+    options: ["Hidden curriculum", "Competitive exams", "Syllabus skipping", "Financial aid"],
+    correctAnswer: 0
+  },
+  {
+    question: "Teachers can encourage value learning by:",
+    options: ["Encouraging open discussion", "Discouraging questions", "Prioritizing marks", "Avoiding feedback"],
+    correctAnswer: 0
+  },
+  {
+    question: "The role of peer groups becomes significant especially during:",
+    options: ["Infancy", "Adolescence", "Adulthood", "Old age"],
+    correctAnswer: 1
+  },
+  {
+    question: "A value-laden environment at home leads to:",
+    options: ["Confusion", "Stability and clarity in character", "Rebellion", "Isolation"],
+    correctAnswer: 1
+  },
+  {
+    question: "What term describes \"morals\"?",
+    options: ["Legal rules enforced by governments", "Personal beliefs of right and wrong", "Professional codes of conduct", "Company policies"],
+    correctAnswer: 1
+  },
+  {
+    question: "Ethics primarily refers to:",
+    options: ["Laws created by the government", "Personal religious beliefs", "Principles governing behavior in society", "Financial responsibilities"],
+    correctAnswer: 2
+  },
+  {
+    question: "Values are:",
+    options: ["Universal moral standards", "Personal principles or standards of behavior", "Government laws", "Business regulations"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which of the following is a key difference between morals and ethics?",
+    options: ["Morals are more formal than ethics", "Ethics are imposed by society; morals are personal", "Ethics are subjective; morals are universal", "There is no difference"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which of these is an example of a value?",
+    options: ["Stealing is wrong", "Loyalty", "Not cheating on a test", "Paying taxes"],
+    correctAnswer: 1
+  },
+  {
+    question: "Ethics in a profession are usually defined by:",
+    options: ["Individual employees", "Personal beliefs", "Professional bodies or organizations", "Customer demands"],
+    correctAnswer: 2
+  },
+  {
+    question: "Morality is often derived from:",
+    options: ["Peer pressure", "Government rules", "Cultural and religious backgrounds", "Workplace regulations"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of the following would most likely be considered an ethical issue?",
+    options: ["Choosing between two job offers", "Deciding whether to report a colleague’s misconduct", "Applying for a vacation", "Selecting office furniture"],
+    correctAnswer: 1
+  },
+  {
+    question: "Personal values influence:",
+    options: ["Only professional behavior", "Only personal relationships", "Both personal and professional decisions", "Only financial decisions"],
+    correctAnswer: 2
+  },
+  {
+    question: "A person who adheres strictly to their own moral code is demonstrating:",
+    options: ["Ethics", "Values", "Integrity", "Authority"],
+    correctAnswer: 2
+  },
+  {
+    question: "An ethical dilemma involves:",
+    options: ["Choosing the easiest way", "Choosing between two right or wrong choices", "Choosing between conflicting moral obligations", "Avoiding responsibilities"],
+    correctAnswer: 2
+  },
+  {
+    question: "In an ethical dilemma, the key challenge is to:",
+    options: ["Follow legal guidelines", "Avoid punishment", "Decide what is the \"right\" course of action", "Please your manager"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of this best represents an ethical dilemma?",
+    options: ["Being late to work", "Receiving two job offers", "Witnessing a friend cheating in an exam", "Choosing a lunch option"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of the following is least likely to help resolve an ethical dilemma?",
+    options: ["Personal bias", "Professional codes", "Company policy", "Seeking advice"],
+    correctAnswer: 0
+  },
+  {
+    question: "In resolving ethical dilemmas, it is important to:",
+    options: ["Avoid accountability", "Protect only your own interests", "Consider the impact on all stakeholders", "Ignore other viewpoints"],
+    correctAnswer: 2
+  },
+  {
+    question: "Professional integrity means:",
+    options: ["Doing what is easy", "Following orders blindly", "Acting honestly and consistently with values", "Avoiding hard work"],
+    correctAnswer: 2
+  },
+  {
+    question: "Accountability in the workplace involves:",
+    options: ["Delegating your responsibilities", "Blaming others for mistakes", "Taking responsibility for actions and outcomes", "Keeping quiet"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which behavior shows lack of accountability?",
+    options: ["Apologizing for an error", "Blaming team members for a failure", "Completing work on time", "Giving honest feedback"],
+    correctAnswer: 1
+  },
+  {
+    question: "Ethical leadership requires:",
+    options: ["Being popular", "Prioritizing results over people", "Setting an example of ethical behavior", "Hiding mistakes"],
+    correctAnswer: 2
+  },
+  {
+    question: "A key principle of professional ethics is:",
+    options: ["Secrecy", "Bias", "Fairness", "Profit"],
+    correctAnswer: 2
+  },
+  {
+    question: "Using company time for personal business is considered:",
+    options: ["Efficient", "Ethical", "Unethical", "Acceptable"],
+    correctAnswer: 2
+  },
+  {
+    question: "Ethical practices at work promote:",
+    options: ["Corruption", "Trust and respect", "Miscommunication", "Conflict"],
+    correctAnswer: 1
+  },
+  {
+    question: "Unethical behavior in the workplace can lead to:",
+    options: ["Higher motivation", "Better reputation", "Legal and reputational damage", "Employee loyalty"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of these is an example of ethical behavior?",
+    options: ["Manipulating data", "Lying to customers", "Reporting a conflict of interest", "Ignoring rules"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which is a common cause of unethical behavior?",
+    options: ["Strong values", "Clear guidelines", "Pressure to meet unrealistic targets", "Ethical leadership"],
+    correctAnswer: 2
+  },
+  {
+    question: "Maintaining a healthy work-life balance helps improve:",
+    options: ["Physical appearance", "Productivity and mental health", "Financial fraud", "Team conflict"],
+    correctAnswer: 1
+  },
+  {
+    question: "An employee who takes regular breaks and leaves on time is focusing on:",
+    options: ["Work-life balance", "Avoiding work", "Laziness", "Disrespect"],
+    correctAnswer: 0
+  },
+  {
+    question: "Work-life imbalance often leads to:",
+    options: ["Career growth", "Better time management", "Stress and burnout", "Job promotions"],
+    correctAnswer: 2
+  },
+  {
+    question: "Ethical workplaces support mental well-being by:",
+    options: ["Overloading employees", "Encouraging 24/7 availability", "Providing flexible work options", "Ignoring personal needs"],
+    correctAnswer: 2
+  },
+  {
+    question: "Balancing personal and professional life means:",
+    options: ["Ignoring one for the other", "Setting healthy boundaries", "Working continuously", "Being available always"],
+    correctAnswer: 1
+  },
+  {
+    question: "A breach of professional ethics can lead to:",
+    options: ["Promotion", "Recognition", "Disciplinary action or legal consequences", "Awards"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of the following is a sign of professional integrity?",
+    options: ["Taking credit for others’ work", "Withholding important information", "Being truthful even when it is hard", "Ignoring deadlines"],
+    correctAnswer: 2
+  },
+  {
+    question: "Transparency and honesty at work are signs of:",
+    options: ["Weakness", "Integrity", "Competition", "Aggression"],
+    correctAnswer: 1
+  },
+  {
+    question: "An accountable employee is one who:",
+    options: ["Delegates all work", "Owns up to mistakes", "Ignores issues", "Avoids responsibility"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which of these is not a part of professional ethics?",
+    options: ["Integrity", "Bias", "Responsibility", "Fairness"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which factor contributes to work-life balance?",
+    options: ["Job insecurity", "Poor communication", "Time management", "Conflict"],
+    correctAnswer: 2
+  },
+  {
+    question: "Workplace accountability encourages:",
+    options: ["Blaming others", "Denial", "Ownership of actions", "Laziness"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of these behaviors is unethical?",
+    options: ["Admitting mistakes", "Cheating on work hours", "Respecting co-workers", "Following rules"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which is a common cause of unethical behavior?",
+    options: ["Strong values", "Clear guidelines", "Pressure to meet unrealistic targets", "Ethical leadership"],
+    correctAnswer: 2
+  },
+  {
+    question: "Mental well-being in the workplace is improved by:",
+    options: ["Lack of communication", "Constant surveillance", "Supportive and respectful environment", "Overload of tasks"],
+    correctAnswer: 2
+  },
+  {
+    question: "Ethical organizations usually have:",
+    options: ["High stress levels", "Clear communication and values", "Undefined goals", "Frequent conflicts"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which factor contributes to work-life balance?",
+    options: ["Job insecurity", "Poor communication", "Time management", "Conflict"],
+    correctAnswer: 2
+  },
+  {
+    question: "Workplace accountability encourages:",
+    options: ["Blaming others", "Denial", "Ownership of actions", "Laziness"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of these behaviors is unethical?",
+    options: ["Admitting mistakes", "Cheating on work hours", "Respecting co-workers", "Following rules"],
+    correctAnswer: 1
+  },
+  {
+    question: "Mental well-being in the workplace is improved by:",
+    options: ["Lack of communication", "Constant surveillance", "Supportive and respectful environment", "Overload of tasks"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which best describes \"diversity\"?",
+    options: ["Having different ideas in a workplace", "Recognizing and valuing differences among people", "Treating everyone the same regardless of identity", "Encouraging conformity in teams"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is the main goal of inclusivity in a diverse environment?",
+    options: ["Increasing competition", "Enforcing uniformity", "Ensuring everyone feels welcomed, respected, and valued", "Promoting one culture above others"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of the following is an example of cultural insensitivity?",
+    options: ["Celebrating multiple cultural holidays", "Using slang or stereotypes when speaking about another culture", "Providing prayer space at work", "Learning a few words in a colleague's native language"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is unconscious bias?",
+    options: ["A deliberate decision to discriminate", "An unknown allergy to a culture", "A learned behavior from a different culture", "Automatic judgments based on stereotypes"],
+    correctAnswer: 3
+  },
+  {
+    question: "Cultural sensitivity requires:",
+    options: ["Ignoring cultural differences", "Learning and adapting to cultural norms different from your own", "Assuming your culture is superior", "Speaking only your native language"],
+    correctAnswer: 1
+  },
+  {
+    question: "Inclusive language is:",
+    options: ["Neutral and respectful of all people", "Based only on traditional roles", "Designed to confuse people", "Meant to exclude specific groups"],
+    correctAnswer: 0
+  },
+  {
+    question: "Which law in many countries supports workplace diversity?",
+    options: ["Labor Protection Act", "Equal Employment Opportunity laws", "Safety at Work Act", "Productivity and Efficiency Code"],
+    correctAnswer: 1
+  },
+  {
+    question: "A culturally inclusive classroom would:",
+    options: ["Teach only the dominant culture’s history", "Discourage multilingual learning", "Incorporate materials from many cultures", "Avoid discussing diversity"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of the following is NOT a benefit of workplace diversity?",
+    options: ["Greater innovation", "Improved decision-making", "Reduced productivity due to different opinions", "Enhanced employee engagement"],
+    correctAnswer: 2
+  },
+  {
+    question: "Stereotyping can lead to:",
+    options: ["Better understanding between cultures", "Fair treatment", "Misjudgement and discrimination", "Effective teamwork"],
+    correctAnswer: 2
+  },
+  {
+    question: "Inter sectionalist considers:",
+    options: ["Only race and gender", "One identity at a time", "Multiple overlapping social identities", "Nationality as the sole factor"],
+    correctAnswer: 2
+  },
+  {
+    question: "Micro aggressions are:",
+    options: ["Overt acts of discrimination", "Subtle, often unintentional insults toward marginalized groups", "Legal actions against diversity", "Acts of inclusion"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which approach promotes inclusivity?",
+    options: ["One-size-fits-all policy", "Culturally responsive practices", "Cultural assimilation only", "Ignoring cultural differences"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is cultural competence?",
+    options: ["Being fluent in many languages", "Ability to interact effectively with people of different cultures", "Memorizing cultural facts", "Travelling frequently"],
+    correctAnswer: 1
+  },
+  {
+    question: "A culturally sensitive leader will:",
+    options: ["Enforce their cultural norms", "Ignore differences in the team", "Acknowledge and leverage diversity in the group", "Promote assimilation"],
+    correctAnswer: 2
+  },
+  {
+    question: "What is the primary goal of social justice?",
+    options: ["Economic growth", "Political dominance", "Equal rights and opportunities for all", "Technological advancement"],
+    correctAnswer: 2
+  },
+  {
+    question: "Civic engagement involves:",
+    options: ["Watching news passively", "Avoiding social issues", "Participating in community and public affairs", "Playing online games"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of the following is a major cause of gender inequality?",
+    options: ["Natural differences", "Cultural and social norms", "Equal access to education", "Economic equality"],
+    correctAnswer: 1
+  },
+  {
+    question: "How can youth help reduce illiteracy?",
+    options: ["Avoiding education-related volunteering", "Promoting rote learning", "Participating in adult literacy programs", "Rejecting education"],
+    correctAnswer: 2
+  },
+  {
+    question: "What is a major effect of illiteracy in society?",
+    options: ["Economic prosperity", "Increased civic participation", "Poverty and unemployment", "Technological development"],
+    correctAnswer: 2
+  },
+  {
+    question: "Literacy helps individuals to:",
+    options: ["Stay dependent on others", "Avoid active participation", "Make informed decisions", "Reject education"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which activity best demonstrates youth civic responsibility?",
+    options: ["Ignoring community problems", "Organizing a community clean-up drive", "Spreading rumors on social media", "Avoiding public discussions"],
+    correctAnswer: 1
+  },
+  {
+    question: "One effective method to address gender stereotypes is:",
+    options: ["Promoting traditional gender roles", "Ignoring the problem", "Gender-sensitive education", "Limiting girls’ education"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which skill is most important for youth in civic engagement?",
+    options: ["Memorization", "Passive listening", "Critical thinking and communication", "Isolation"],
+    correctAnswer: 2
+  },
+  {
+    question: "Why is youth participation essential in solving societal issues?",
+    options: ["They are the majority voters", "They follow orders without question", "They bring energy, innovation, and long-term commitment", "They avoid societal change"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which action best demonstrates community service?",
+    options: ["Watching a movie", "Cleaning a local park", "Shopping at a mall", "Attending a concert"],
+    correctAnswer: 1
+  },
+  {
+    question: "Volunteering can help individuals develop:",
+    options: ["Bad habits", "Social isolation", "Communication and teamwork skills", "Laziness"],
+    correctAnswer: 2
+  },
+  {
+    question: "One benefit of volunteering is:",
+    options: ["Reduced physical activity", "Building a criminal record", "Improving mental health", "Increasing stress"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which sector often depends heavily on volunteers?",
+    options: ["Private corporations", "Non-profit organizations", "Luxury hotels", "Shopping malls"],
+    correctAnswer: 1
+  },
+  {
+    question: "How can one identify a suitable volunteering opportunity?",
+    options: ["Choose the one that pays the most", "Follow your passion and skills", "Copy what friends are doing", "Pick randomly"],
+    correctAnswer: 1
+  },
+  {
+    question: "What quality is most important in a volunteer?",
+    options: ["Greed", "Commitment", "Inactivity", "Selfishness"],
+    correctAnswer: 1
+  },
+  {
+    question: "Community engagement involves:",
+    options: ["Isolating from society", "Destroying public property", "Actively working with others to solve local issues", "Ignoring community problems"],
+    correctAnswer: 2
+  },
+  {
+    question: "A student volunteer at a hospital is likely helping with:",
+    options: ["Surgery", "Patient support services", "Legal documentation", "Building maintenance"],
+    correctAnswer: 1
+  },
+  {
+    question: "Volunteering during disasters can include:",
+    options: ["Spreading rumours", "Hoarding resources", "Providing food and shelter", "Avoiding help"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which is a long-term benefit of community service?",
+    options: ["Instant wealth", "Legal immunity", "Personal growth and community development", "Social unrest"],
+    correctAnswer: 2
+  },
+  {
+    question: "What motivates many people to volunteer?",
+    options: ["Boredom", "Desire to give back to the community", "Avoidance of work", "Financial reward"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which of the following is not a benefit of community engagement?",
+    options: ["Social connection", "Civic pride", "Community improvement", "Social isolation"],
+    correctAnswer: 3
+  },
+  {
+    question: "Which group often engages in community service as part of personal development?",
+    options: ["Tourists", "School and college students", "Celebrities only", "Business tycoons only"],
+    correctAnswer: 1
+  },
+  {
+    question: "The best way to identify a suitable volunteering opportunity is to:",
+    options: ["Choose the one that pays the most", "Follow your passion and skills", "Copy what friends are doing", "Pick randomly"],
+    correctAnswer: 1
+  },
+  {
+    question: "Community service can also contribute to:",
+    options: ["Academic failure", "Resume building and career development", "Unemployment", "Social unrest"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is an inclusive education system?",
+    options: ["One that excludes students with disabilities", "One that accommodates all learners regardless of background or ability", "One that only admits wealthy students", "One that discourages diversity"],
+    correctAnswer: 1
+  },
+  {
+    question: "How can social media be used for social justice?",
+    options: ["By spreading hate speech", "By amplifying awareness and mobilizing support for causes", "By promoting fake news only", "By discouraging activism"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is the first step in addressing gender inequality?",
+    options: ["Ignoring the issue", "Educating people about gender biases and promoting equality", "Encouraging discrimination", "Limiting opportunities for one gender"],
+    correctAnswer: 1
+  },
+  {
+    question: "Why is digital literacy important for modern education?",
+    options: ["It restricts access to information", "It helps students navigate technology for learning and employment", "It promotes outdated teaching methods", "It discourages critical thinking"],
+    correctAnswer: 1
+  },
+  {
+    question: "How can youth advocate for climate justice?",
+    options: ["By ignoring environmental policies", "By organizing tree-planting drives and reducing plastic waste", "By promoting deforestation", "By opposing renewable energy"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is the impact of peer education in tackling societal issues?",
+    options: ["It has no influence on youth", "It empowers young people to educate each other on critical topics like health and equality", "It spreads misinformation", "It discourages teamwork"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which skill is most developed through volunteering?",
+    options: ["Isolation", "Leadership and teamwork", "Laziness", "Selfishness"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is a long-term benefit of community service?",
+    options: ["Increased social disconnect", "Stronger community bonds and personal fulfillment", "Encouragement of corruption", "Promotion of inequality"],
+    correctAnswer: 1
+  },
+  {
+    question: "How can volunteering reduce prejudice?",
+    options: ["By keeping communities segregated", "By fostering interactions between diverse groups", "By promoting stereotypes", "By avoiding marginalized populations"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is an example of virtual volunteering?",
+    options: ["Ignoring online petitions", "Tutoring students via video calls", "Spamming social media", "Avoiding digital platforms"],
+    correctAnswer: 1
+  },
+  {
+    question: "Why should corporations encourage employee volunteering?",
+    options: ["To reduce productivity", "To boost morale and social responsibility", "To discourage teamwork", "To increase workplace conflicts"],
+    correctAnswer: 1
+  },
+  {
+    question: "Volunteers are driven by:",
+    options: ["Greed", "Social commitment", "Politics", "Bias"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which behavior demonstrates inclusivity in a workplace?",
+    options: ["Only hiring people from one background", "Providing equal opportunities for employees of all genders and ethnicities", "Discouraging employees from sharing their cultural practices", "Ignoring discrimination complaints"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is \"intersectionality\" in social justice?",
+    options: ["Ignoring overlapping forms of discrimination", "Recognizing how race, gender, class, and other identities create unique experiences of oppression", "Promoting only one aspect of diversity", "Eliminating cultural differences"],
+    correctAnswer: 1
+  },
+  {
+    question: "How can schools promote cultural sensitivity?",
+    options: ["By discouraging discussions about different cultures", "By celebrating multicultural events and teaching inclusive history", "By enforcing a single language", "By segregating students based on ethnicity"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is an inclusive policy?",
+    options: ["Banning religious attire in public spaces", "Providing prayer rooms for people of all faiths in an institution", "Hiring only men for leadership roles", "Refusing to accommodate people with disabilities"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is the purpose of affirmative action?",
+    options: ["To discriminate against minorities", "To provide equal opportunities for historically marginalized groups", "To eliminate diversity in workplaces", "To favor only the majority population"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is a barrier to inclusivity?",
+    options: ["Open communication", "Prejudice and stereotypes", "Cultural exchange", "Diversity training"],
+    correctAnswer: 1
+  },
+  {
+    question: "Respect for diversity encourages:",
+    options: ["Uniformity of thought", "Discrimination", "Acceptance of differences", "Isolation"],
+    correctAnswer: 2
+  },
+  {
+    question: "Youth volunteering improves:",
+    options: ["Social gaps", "Community strength", "Isolation", "Division"],
+    correctAnswer: 1
+  },
+  {
+    question: "Respecting others’ beliefs and customs is a part of:",
+    options: ["Social exclusion", "Cultural sensitivity", "Ethnocentrism", "Prejudice"],
+    correctAnswer: 1
+  },
+  {
+    question: "Educated youth can contribute by:",
+    options: ["Spreading awareness", "Isolating communities", "Avoiding activism", "Opposing education"],
+    correctAnswer: 0
+  },
+  {
+    question: "Discrimination in job hiring violates:",
+    options: ["Social justice", "Economic growth", "Personal rights", "Educational standards"],
+    correctAnswer: 0
+  },
+  {
+    question: "Diversity in a group improves:",
+    options: ["Conflict", "Creativity and Innovation", "Monotony", "Uniformity"],
+    correctAnswer: 1
+  },
+  {
+    question: "What term describes \"diversity\"?",
+    options: ["Having different ideas in a workplace", "Recognizing and valuing differences among people", "Treating everyone the same regardless of identity", "Encouraging conformity in teams"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is the main goal of inclusivity in a diverse environment?",
+    options: ["Increasing competition", "Enforcing uniformity", "Ensuring everyone feels welcomed, respected, and valued", "Promoting one culture above others"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of the following is an example of cultural insensitivity?",
+    options: ["Celebrating multiple cultural holidays", "Using slang or stereotypes when speaking about another culture", "Providing prayer space at work", "Learning a few words in a colleague's native language"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is unconscious bias?",
+    options: ["A deliberate decision to discriminate", "An unknown allergy to a culture", "A learned behavior from a different culture", "Automatic judgments based on stereotypes"],
+    correctAnswer: 3
+  },
+  {
+    question: "Cultural sensitivity requires:",
+    options: ["Ignoring cultural differences", "Learning and adapting to cultural norms different from your own", "Assuming your culture is superior", "Speaking only your native language"],
+    correctAnswer: 1
+  },
+  {
+    question: "Inclusive language is:",
+    options: ["Neutral and respectful of all people", "Based only on traditional roles", "Designed to confuse people", "Meant to exclude specific groups"],
+    correctAnswer: 0
+  },
+  {
+    question: "Which law in many countries supports workplace diversity?",
+    options: ["Labor Protection Act", "Equal Employment Opportunity laws", "Safety at Work Act", "Productivity and Efficiency Code"],
+    correctAnswer: 1
+  },
+  {
+    question: "A culturally inclusive classroom would:",
+    options: ["Teach only the dominant culture’s history", "Discourage multilingual learning", "Incorporate materials from many cultures", "Avoid discussing diversity"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which of the following is NOT a benefit of workplace diversity?",
+    options: ["Greater innovation", "Improved decision-making", "Reduced productivity due to different opinions", "Enhanced employee engagement"],
+    correctAnswer: 2
+  },
+  {
+    question: "Stereotyping can lead to:",
+    options: ["Better understanding between cultures", "Fair treatment", "Misjudgement and discrimination", "Effective teamwork"],
+    correctAnswer: 2
+  },
+  {
+    question: "Inter sectionalist considers:",
+    options: ["Only race and gender", "One identity at a time", "Multiple overlapping social identities", "Nationality as the sole factor"],
+    correctAnswer: 2
+  },
+  {
+    question: "Micro aggressions are:",
+    options: ["Overt acts of discrimination", "Subtle, often unintentional insults toward marginalized groups", "Legal actions against diversity", "Acts of inclusion"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which approach promotes inclusivity?",
+    options: ["One-size-fits-all policy", "Culturally responsive practices", "Cultural assimilation only", "Ignoring cultural differences"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is cultural competence?",
+    options: ["Being fluent in many languages", "Ability to interact effectively with people of different cultures", "Memorizing cultural facts", "Travelling frequently"],
+    correctAnswer: 1
+  },
+  {
+    question: "A culturally sensitive leader will:",
+    options: ["Enforce their cultural norms", "Ignore differences in the team", "Acknowledge and leverage diversity in the group", "Promote assimilation"],
+    correctAnswer: 2
+  },
+  {
+    question: "What is the primary purpose of community service?",
+    options: ["To earn money", "To benefit society without expecting payment", "To gain fame", "To avoid personal growth"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which of the following is an example of community service?",
+    options: ["Watching a movie", "Cleaning a local park", "Shopping at a mall", "Attending a concert"],
+    correctAnswer: 1
+  },
+  {
+    question: "Volunteering can help individuals develop:",
+    options: ["Bad habits", "Social isolation", "Communication and teamwork skills", "Laziness"],
+    correctAnswer: 2
+  },
+  {
+    question: "One benefit of volunteering is:",
+    options: ["Reduced physical activity", "Building a criminal record", "Improving mental health", "Increasing stress"],
+    correctAnswer: 2
+  },
+  {
+    question: "Which sector often depends heavily on volunteers?",
+    options: ["Private corporations", "Non-profit organizations", "Luxury hotels", "Shopping malls"],
+    correctAnswer: 1
+  },
+  {
+    question: "What motivates many people to volunteer?",
+    options: ["Boredom", "Desire to give back to the community", "Avoidance of work", "Financial reward"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which of the following is not a benefit of community engagement?",
+    options: ["Social connection", "Civic pride", "Community improvement", "Social isolation"],
+    correctAnswer: 3
+  },
+  {
+    question: "Which group often engages in community service as part of personal development?",
+    options: ["Tourists", "School and college students", "Celebrities only", "Business tycoons only"],
+    correctAnswer: 1
+  },
+  {
+    question: "The best way to identify a suitable volunteering opportunity is to:",
+    options: ["Choose the one that pays the most", "Follow your passion and skills", "Copy what friends are doing", "Pick randomly"],
+    correctAnswer: 1
+  },
+  {
+    question: "Community service can also contribute to:",
+    options: ["Academic failure", "Resume building and career development", "Unemployment", "Social unrest"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is a long-term benefit of community service?",
+    options: ["Increased social disconnect", "Stronger community bonds and personal fulfillment", "Encouragement of corruption", "Promotion of inequality"],
+    correctAnswer: 1
+  },
+  {
+    question: "How can volunteering reduce prejudice?",
+    options: ["By keeping communities segregated", "By fostering interactions between diverse groups", "By promoting stereotypes", "By avoiding marginalized populations"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is an example of virtual volunteering?",
+    options: ["Ignoring online petitions", "Tutoring students via video calls", "Spamming social media", "Avoiding digital platforms"],
+    correctAnswer: 1
+  },
+  {
+    question: "Why should corporations encourage employee volunteering?",
+    options: ["To reduce productivity", "To boost morale and social responsibility", "To discourage teamwork", "To increase workplace conflicts"],
+    correctAnswer: 1
+  },
+  {
+    question: "Volunteers are driven by:",
+    options: ["Greed", "Social commitment", "Politics", "Bias"],
+    correctAnswer: 1
+  },
+  {
+    question: "Which behavior demonstrates inclusivity in a workplace?",
+    options: ["Only hiring people from one background", "Providing equal opportunities for employees of all genders and ethnicities", "Discouraging employees from sharing their cultural practices", "Ignoring discrimination complaints"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is \"intersectionality\" in social justice?",
+    options: ["Ignoring overlapping forms of discrimination", "Recognizing how race, gender, class, and other identities create unique experiences of oppression", "Promoting only one aspect of diversity", "Eliminating cultural differences"],
+    correctAnswer: 1
+  },
+  {
+    question: "How can schools promote cultural sensitivity?",
+    options: ["By discouraging discussions about different cultures", "By celebrating multicultural events and teaching inclusive history", "By enforcing a single language", "By segregating students based on ethnicity"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is an inclusive policy?",
+    options: ["Banning religious attire in public spaces", "Providing prayer rooms for people of all faiths in an institution", "Hiring only men for leadership roles", "Refusing to accommodate people with disabilities"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is the purpose of affirmative action?",
+    options: ["To discriminate against minorities", "To provide equal opportunities for historically marginalized groups", "To eliminate diversity in workplaces", "To favor only the majority population"],
+    correctAnswer: 1
+  },
+  {
+    question: "What is a barrier to inclusivity?",
+    options: ["Open communication", "Prejudice and stereotypes", "Cultural exchange", "Diversity training"],
+    correctAnswer: 1
+  },
+  {
+    question: "Respect for diversity encourages:",
+    options: ["Uniformity of thought", "Discrimination", "Acceptance of differences", "Isolation"],
+    correctAnswer: 2
+  },
+  {
+    question: "Youth volunteering improves:",
+    options: ["Social gaps", "Community strength", "Isolation", "Division"],
+    correctAnswer: 1
+  },
+  {
+    question: "Respecting others’ beliefs and customs is a part of:",
+    options: ["Social exclusion", "Cultural sensitivity", "Ethnocentrism", "Prejudice"],
+    correctAnswer: 1
+  },
+  {
+    question: "Educated youth can contribute by:",
+    options: ["Spreading awareness", "Isolating communities", "Avoiding activism", "Opposing education"],
+    correctAnswer: 0
+  },
+  {
+    question: "Discrimination in job hiring violates:",
+    options: ["Social justice", "Economic growth", "Personal rights", "Educational standards"],
+    correctAnswer: 0
+  },
+  {
+    question: "Diversity in a group improves:",
+    options: ["Conflict", "Creativity and Innovation", "Monotony", "Uniformity"],
+    correctAnswer: 1
+  }
+];
+
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+const quizData = shuffleArray([...questionPool]).slice(0, 50);
+let currentQuestion = 0;
+let userAnswers = Array(quizData.length).fill(null);
+let timerInterval;
+let timeLeft = 5400;
+const totalQuestions = 50;
+let startTime;
+let endTime;
+let filterMode = 'all';
+const landingPage = document.getElementById('landing-page');
+const quizContainer = document.getElementById('quiz-container');
+const resultsContainer = document.getElementById('results-container');
+const startQuizBtn = document.getElementById('start-quiz-btn');
+const prevBtn = document.getElementById('prev-btn');
+const nextBtn = document.getElementById('next-btn');
+const submitBtn = document.getElementById('submit-btn');
+const restartQuizBtn = document.getElementById('restart-quiz-btn');
+const questionText = document.getElementById('question-text');
+const optionsContainer = document.getElementById('options-container');
+const currentQuestionDisplay = document.getElementById('current-question');
+const totalQuestionsDisplay = document.getElementById('total-questions');
+const progressBarInner = document.getElementById('progress-bar-inner');
+const timeDisplay = document.getElementById('time-display');
+const timer = document.getElementById('timer');
+const scoreDisplay = document.getElementById('score-display');
+const maxScoreDisplay = document.getElementById('max-score');
+const percentageDisplay = document.getElementById('percentage-display');
+const timeTakenDisplay = document.getElementById('time-taken');
+const answersReview = document.getElementById('answers-review');
+const showAllBtn = document.getElementById('show-all-btn');
+const showCorrectBtn = document.getElementById('show-correct-btn');
+const showIncorrectBtn = document.getElementById('show-incorrect-btn');
+function initQuiz() {
+totalQuestionsDisplay.textContent = quizData.length;
+updateQuestion();
+updateNavButtons();
+}
+function updateQuestion() {
+const question = quizData[currentQuestion];
+questionText.textContent = question.question;
+optionsContainer.innerHTML = '';
+question.options.forEach((option, index) => {
+const optionDiv = document.createElement('div');
+optionDiv.className = 'custom-radio';
+const input = document.createElement('input');
+input.type = 'radio';
+input.id = `option-${index + 1}`;
+input.name = 'answer';
+input.value = index;
+if (userAnswers[currentQuestion] === index) {
+input.checked = true;
+}
+const label = document.createElement('label');
+label.htmlFor = `option-${index + 1}`;
+label.className = 'text-gray-700 hover:text-gray-900';
+label.textContent = option;
+optionDiv.appendChild(input);
+optionDiv.appendChild(label);
+optionsContainer.appendChild(optionDiv);
+input.addEventListener('change', function() {
+userAnswers[currentQuestion] = parseInt(this.value);
+});
+});
+currentQuestionDisplay.textContent = currentQuestion + 1;
+const progress = ((currentQuestion + 1) / quizData.length) * 100;
+progressBarInner.style.width = `${progress}%`;
+}
+function updateNavButtons() {
+prevBtn.style.visibility = currentQuestion === 0 ? 'hidden' : 'visible';
+if (currentQuestion === quizData.length - 1) {
+nextBtn.classList.add('hidden');
+submitBtn.classList.remove('hidden');
+} else {
+nextBtn.classList.remove('hidden');
+submitBtn.classList.add('hidden');
+}
+}
+function startTimer() {
+startTime = new Date();
+timerInterval = setInterval(function() {
+timeLeft--;
+if (timeLeft <= 0) {
+clearInterval(timerInterval);
+submitQuiz();
+} else {
+updateTimerDisplay();
+if (timeLeft <= 60) {
+timer.classList.add('timer-warning');
+timeDisplay.classList.add('text-red-600');
+}
+}
+}, 1000);
+updateTimerDisplay();
+}
+function updateTimerDisplay() {
+const minutes = Math.floor(timeLeft / 60);
+const seconds = timeLeft % 60;
+timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+function showResults() {
+endTime = new Date();
+const timeTaken = Math.floor((endTime - startTime) / 1000);
+const minutes = Math.floor(timeTaken / 60);
+const seconds = timeTaken % 60;
+let score = 0;
+userAnswers.forEach((answer, index) => {
+if (answer === quizData[index].correctAnswer) {
+score++;
+}
+});
+const percentage = Math.round((score / quizData.length) * 100);
+scoreDisplay.textContent = score;
+maxScoreDisplay.textContent = quizData.length;
+percentageDisplay.textContent = percentage;
+timeTakenDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+generateAnswerReviews();
+quizContainer.classList.add('hidden');
+resultsContainer.classList.remove('hidden');
+}
+function generateAnswerReviews() {
+answersReview.innerHTML = '';
+quizData.forEach((question, index) => {
+const isCorrect = userAnswers[index] === question.correctAnswer;
+if ((filterMode === 'all') ||
+(filterMode === 'correct' && isCorrect) ||
+(filterMode === 'incorrect' && !isCorrect)) {
+const reviewDiv = document.createElement('div');
+reviewDiv.className = `answer-review ${isCorrect ? 'correct' : 'incorrect'} bg-white rounded-lg p-6 shadow-sm border border-gray-100`;
+const questionHeader = document.createElement('div');
+questionHeader.className = 'flex items-center justify-between mb-4';
+const questionNumber = document.createElement('div');
+questionNumber.className = 'text-sm font-medium text-gray-500';
+questionNumber.textContent = `Question ${index + 1}`;
+const statusBadge = document.createElement('div');
+if (isCorrect) {
+statusBadge.className = 'px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium';
+statusBadge.textContent = 'Correct';
+} else {
+statusBadge.className = 'px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-medium';
+statusBadge.textContent = 'Incorrect';
+}
+questionHeader.appendChild(questionNumber);
+questionHeader.appendChild(statusBadge);
+const questionContent = document.createElement('div');
+questionContent.className = 'mb-4';
+const questionTitle = document.createElement('h3');
+questionTitle.className = 'text-lg font-medium text-gray-900 mb-3';
+questionTitle.textContent = question.question;
+questionContent.appendChild(questionTitle);
+const answersList = document.createElement('div');
+answersList.className = 'space-y-2';
+question.options.forEach((option, optionIndex) => {
+const answerItem = document.createElement('div');
+answerItem.className = 'flex items-center';
+let answerClass = 'text-gray-700';
+let iconClass = '';
+if (optionIndex === question.correctAnswer) {
+answerClass = 'text-green-700 font-medium';
+iconClass = 'ri-check-line text-green-600';
+} else if (optionIndex === userAnswers[index] && userAnswers[index] !== question.correctAnswer) {
+answerClass = 'text-red-700 font-medium';
+iconClass = 'ri-close-line text-red-600';
+}
+if (iconClass) {
+const icon = document.createElement('div');
+icon.className = 'w-5 h-5 flex items-center justify-center mr-2';
+const i = document.createElement('i');
+i.className = iconClass;
+icon.appendChild(i);
+answerItem.appendChild(icon);
+} else {
+const spacer = document.createElement('div');
+spacer.className = 'w-7';
+answerItem.appendChild(spacer);
+}
+const answerText = document.createElement('span');
+answerText.className = answerClass;
+answerText.textContent = option;
+answerItem.appendChild(answerText);
+answersList.appendChild(answerItem);
+});
+questionContent.appendChild(answersList);
+reviewDiv.appendChild(questionHeader);
+reviewDiv.appendChild(questionContent);
+answersReview.appendChild(reviewDiv);
+}
+});
+}
+function submitQuiz() {
+clearInterval(timerInterval);
+showResults();
+}
+startQuizBtn.addEventListener('click', function() {
+const quizData = shuffleArray([...questionPool]).slice(0, 50);
+userAnswers = Array(quizData.length).fill(null);
+landingPage.classList.add('hidden');
+quizContainer.classList.remove('hidden');
+initQuiz();
+startTimer();
+});
+prevBtn.addEventListener('click', function() {
+if (currentQuestion > 0) {
+currentQuestion--;
+updateQuestion();
+updateNavButtons();
+}
+});
+nextBtn.addEventListener('click', function() {
+if (currentQuestion < quizData.length - 1) {
+currentQuestion++;
+updateQuestion();
+updateNavButtons();
+}
+});
+submitBtn.addEventListener('click', submitQuiz);
+restartQuizBtn.addEventListener('click', function() {
+currentQuestion = 0;
+userAnswers = Array(quizData.length).fill(null);
+timeLeft = 5400;
+filterMode = 'all';
+timer.classList.remove('timer-warning');
+timeDisplay.classList.remove('text-red-600');
+showAllBtn.classList.add('bg-primary', 'text-white');
+showAllBtn.classList.remove('bg-white', 'text-gray-700', 'border-gray-300', 'border');
+showCorrectBtn.classList.remove('bg-primary', 'text-white');
+showCorrectBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'border-y', 'border-r');
+showIncorrectBtn.classList.remove('bg-primary', 'text-white');
+showIncorrectBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'border-y', 'border-r');
+resultsContainer.classList.add('hidden');
+landingPage.classList.remove('hidden');
+});
+showAllBtn.addEventListener('click', function() {
+filterMode = 'all';
+generateAnswerReviews();
+showAllBtn.classList.add('bg-primary', 'text-white');
+showAllBtn.classList.remove('bg-white', 'text-gray-700', 'border-gray-300', 'border');
+showCorrectBtn.classList.remove('bg-primary', 'text-white');
+showCorrectBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'border-y', 'border-r');
+showIncorrectBtn.classList.remove('bg-primary', 'text-white');
+showIncorrectBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'border-y', 'border-r');
+});
+showCorrectBtn.addEventListener('click', function() {
+filterMode = 'correct';
+generateAnswerReviews();
+showCorrectBtn.classList.add('bg-primary', 'text-white');
+showCorrectBtn.classList.remove('bg-white', 'text-gray-700', 'border-gray-300', 'border-y', 'border-r');
+showAllBtn.classList.remove('bg-primary', 'text-white');
+showAllBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'border');
+showIncorrectBtn.classList.remove('bg-primary', 'text-white');
+showIncorrectBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'border-y', 'border-r');
+});
+showIncorrectBtn.addEventListener('click', function() {
+filterMode = 'incorrect';
+generateAnswerReviews();
+showIncorrectBtn.classList.add('bg-primary', 'text-white');
+showIncorrectBtn.classList.remove('bg-white', 'text-gray-700', 'border-gray-300', 'border-y', 'border-r');
+showAllBtn.classList.remove('bg-primary', 'text-white');
+showAllBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'border');
+showCorrectBtn.classList.remove('bg-primary', 'text-white');
+showCorrectBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'border-y', 'border-r');
+});
+document.addEventListener('keydown', function(event) {
+if (quizContainer.classList.contains('hidden')) return;
+if (event.key === 'ArrowLeft' && currentQuestion > 0) {
+prevBtn.click();
+} else if (event.key === 'ArrowRight' && currentQuestion < quizData.length - 1) {
+nextBtn.click();
+} else if (event.key === 'Enter' && currentQuestion === quizData.length - 1) {
+submitBtn.click();
+} else if (event.key >= '1' && event.key <= '4') {
+const optionIndex = parseInt(event.key) - 1;
+if (optionIndex >= 0 && optionIndex < quizData[currentQuestion].options.length) {
+const radioInput = document.querySelector(`#option-${optionIndex + 1}`);
+if (radioInput) {
+radioInput.checked = true;
+userAnswers[currentQuestion] = optionIndex;
+}
+}
+}
+});
+});
+</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9311f2664ef34514',t:'MTc0NDc4ODMwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
