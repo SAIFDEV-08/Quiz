@@ -390,1129 +390,170 @@ Restart Quiz
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-const questionPool = [
+const questionPool =[
   {
-    question: "What is meant by ‘value’?",
-    options: ["Price of a product", "Moral principles and beliefs that guide behaviour", "Market demand", "Economic supply"],
-    correctAnswer: 1
-  },
-  {
-    question: "Values are usually acquired through:",
-    options: ["Birth", "Education and experience", "Genetics", "Wealth"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which one of the following is an example of moral value?",
-    options: ["Experience", "Integrity", "Intelligence", "Wealth"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which of the following is a characteristic of values?",
-    options: ["Temporary", "Change frequently", "Guide behavior and decision-making", "Always inherited"],
+    question: "An article is bought for ₹800 and sold for ₹1,000. Find the profit percent.",
+    options: ["20%", "22%", "25%", "30%"],
     correctAnswer: 2
   },
   {
-    question: "Values that relate to beliefs in religion or spirituality are:",
-    options: ["Political values", "Social values", "Economic values", "Religious values"],
+    question: "Selling price is ₹1,200 and gain is 20%. Find cost price.",
+    options: ["₹900", "₹1,000", "₹1,050", "₹1,100"],
+    correctAnswer: 1
+  },
+  {
+    question: "HCF of 18 and 24 is",
+    options: ["3", "6", "9", "12"],
+    correctAnswer: 1
+  },
+  {
+    question: "LCM of 10 and 15 is",
+    options: ["20", "25", "30", "40"],
+    correctAnswer: 2
+  },
+  {
+    question: "Average of 5, 10, 15 is",
+    options: ["8", "10", "12", "15"],
+    correctAnswer: 1
+  },
+  {
+    question: "Distance covered in 3 hours at 50 km/hr is",
+    options: ["120 km", "140 km", "150 km", "180 km"],
+    correctAnswer: 2
+  },
+  {
+    question: "Relative speed of two trains moving opposite at 40 & 60 km/hr is",
+    options: ["20", "60", "80", "100"],
     correctAnswer: 3
   },
   {
-    question: "Which value is a common factor towards respect for elders and traditions?",
-    options: ["Personal value", "Moral value", "Cultural value", "Spiritual value"],
-    correctAnswer: 2
+    question: "Work and time are",
+    options: ["Directly proportional", "Inversely proportional", "Equal", "Independent"],
+    correctAnswer: 1
   },
   {
-    question: "The process of teaching and acquiring values is known as:",
-    options: ["Socialization", "Valuation", "Moral policing", "Standardization"],
+    question: "Ratio of 15 and 20 is",
+    options: ["3:4", "4:3", "2:3", "5:6"],
     correctAnswer: 0
   },
   {
-    question: "Which of the following is an economic value?",
-    options: ["Equality", "Honesty", "Wealth creation", "Faith"],
+    question: "SI on ₹1,000 at 10% for 1 year is",
+    options: ["₹50", "₹100", "₹150", "₹200"],
+    correctAnswer: 1
+  },
+
+  // Reasoning
+  {
+    question: "1, 1, 2, 3, 5, ?",
+    options: ["6", "7", "8", "9"],
     correctAnswer: 2
   },
   {
-    question: " “Honesty is the best policy” is an example of:",
-    options: ["Social norm", "Value statement", "Fact", "Rule"],
+    question: "2, 6, 18, 54, ?",
+    options: ["108", "162", "216", "324"],
     correctAnswer: 1
   },
   {
-    question: "Which type of value influences how a person behaves in personal life?",
-    options: ["Social value", "Political value", "Personal value", "Cultural value"],
-    correctAnswer: 2
-  },
-  {
-    question: "Universal values are those which:",
-    options: ["Change from person to person", "Are accepted globally", "Are related to political beliefs", "Are taught in school only"],
-    correctAnswer: 1
-  },
-  {
-    question: "Respect for others, kindness, and empathy are considered:",
-    options: ["Religious values", "Economic values", "Social values", "Political values"],
-    correctAnswer: 2
-  },
-  {
-    question: "A student working hard to score good marks shows which value?",
-    options: ["Aesthetic", "Spiritual", "Educational", "Economic"],
-    correctAnswer: 2
-  },
-  {
-    question: "Values can be best developed through:",
-    options: ["Law enforcement", "Strict rules", "Role modeling and education", "Punishment"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which type of values guide professional ethics and standards?",
-    options: ["Cultural values", "Vocational values", "Social values", "Physical values"],
-    correctAnswer: 1
-  },
-  {
-    question: "Value-Based Education helps in developing:",
-    options: ["Only cognitive skills", "Only physical strength", "A complete personality", "Scientific attitude"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which is a core component of Value-Based Education?",
-    options: ["Competitive spirit", "Academic syllabus only", "Character building", "Exam-oriented study"],
-    correctAnswer: 2
-  },
-  {
-    question: "Value-Based Education focuses on the development of:",
-    options: ["Only IQ", "Only physical health", "IQ, EQ, and moral values", "Financial literacy"],
-    correctAnswer: 2
-  },
-  {
-    question: "Who plays the most crucial role in Value-Based Education?",
-    options: ["Principal", "Parents only", "Teachers", "Government"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which of the following is a universal value taught through VBE?",
-    options: ["Corruption", "Justice", "Inequality", "Manipulation"],
-    correctAnswer: 1
-  },
-  {
-    question: "One important objective of Value-Based Education is:",
-    options: ["Social fragmentation", "Exploitation", "Harmony and peace", "Technological dominance"],
-    correctAnswer: 2
-  },
-  {
-    question: "What is meant by \"Value\" in education?",
-    options: ["Material worth", "Ethical principle guiding behavior", "Price of education", "Currency"],
-    correctAnswer: 1
-  },
-  {
-    question: "Value-Based Education leads to:",
-    options: ["Robotic behavior", "Blind obedience", "Development of conscience", "Restriction of thoughts"],
-    correctAnswer: 2
-  },
-  {
-    question: "The foundation of Value-Based Education lies in:",
-    options: ["Technology", "Scientific discovery", "Human values and ethics", "Historical facts"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which of the following methods is used in Value-Based Education?",
-    options: ["Objective tests only", "Practical training in labs", "Debates and discussions on moral issues", "MCQ tests"],
-    correctAnswer: 2
-  },
-  {
-    question: "Value-Based Education promotes:",
-    options: ["Only cognitive development", "Only personal relationships", "Complete personality development", "Financial literacy"],
-    correctAnswer: 2
-  },
-  {
-    question: "Who plays the most important role in the early inculcation of values in children?",
-    options: ["Teachers", "Friends", "Parents", "Society"],
-    correctAnswer: 2
-  },
-  {
-    question: "Teachers can inculcate values most effectively through:",
-    options: ["Lectures only", "Punishment", "Their behavior and example", "Strict rules"],
-    correctAnswer: 2
-  },
-  {
-    question: "Peer groups influence value formation most strongly during:",
-    options: ["Infancy", "Childhood", "Adolescence", "Old age"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which of the following is a method for teachers to inculcate values?",
-    options: ["Memorization", "Role modelling", "Shouting", "Grading"],
-    correctAnswer: 1
-  },
-  {
-    question: "Parents fail in inculcating values when they:",
-    options: ["Are strict", "Practice what they preach", "Ignore children’s moral development", "Guide children positively"],
-    correctAnswer: 2
-  },
-  {
-    question: "Mass media is a part of:",
-    options: ["A Peer group", "Society", "School", "Religion"],
-    correctAnswer: 1
-  },
-  {
-    question: "A school assembly helps inculcate values like:",
-    options: ["Jealousy", "Individualism", "Respect, discipline, and unity", "Rebellion"],
-    correctAnswer: 2
-  },
-  {
-    question: "A child learns honesty best from:",
-    options: ["TV", "Siblings", "Parents' actions", "Class tests"],
-    correctAnswer: 2
-  },
-  {
-    question: "The best way to create value-rich society is to:",
-    options: ["Enforce strict punishments", "Encourage value education at all levels", "Promote only cultural programs", "Avoid digital learning"],
-    correctAnswer: 1
-  },
-  {
-    question: "What does the term “value” primarily refer to?",
-    options: ["Emotional reactions", "Scientific knowledge", "Judgments of what is important", "Educational qualifications"],
-    correctAnswer: 2
-  },
-  {
-    question: "Values are generally developed through:",
-    options: ["Inheritance", "Personal preferences", "Social interactions", "Physical training"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which of the following is a moral value?",
-    options: ["Honesty", "Intelligence", "Skill", "Strength"],
-    correctAnswer: 0
-  },
-  {
-    question: "Which classification includes aesthetic, moral, and spiritual values?",
-    options: ["Economic values", "Universal values", "Personal values", "Human values"],
+    question: "Apple, Mango, Banana, Carrot",
+    options: ["Apple", "Mango", "Banana", "Carrot"],
     correctAnswer: 3
   },
+
+  // Unit 2
   {
-    question: "Who said “A value is a conception, explicit or implicit, distinctive of an individual or characteristic of a group”?",
-    options: ["Rokeach", "Dewey", "Morris", "Spranger"],
-    correctAnswer: 2
-  },
-  {
-    question: "Values can be:",
-    options: ["Always inherited", "Learned and developed", "Taught only in school", "Impossible to change"],
+    question: "Which number system uses base 2?",
+    options: ["Decimal", "Binary", "Octal", "Hexadecimal"],
     correctAnswer: 1
   },
   {
-    question: "Spiritual values promote:",
-    options: ["Competition", "Selfishness", "Inner growth and peace", "Professional success"],
-    correctAnswer: 2
-  },
-  {
-    question: "Patriotism is an example of:",
-    options: ["Economic value", "Civic value", "Physical value", "Personal value"],
+    question: "CPU stands for:",
+    options: ["Central Program Unit", "Central Processing Unit", "Computer Processing Unit", "Control Processing Unit"],
     correctAnswer: 1
   },
   {
-    question: "Which value classification involves truthfulness, integrity, and compassion?",
-    options: ["Aesthetic", "Spiritual", "Moral", "Economic"],
+    question: "Which memory is volatile?",
+    options: ["ROM", "Hard Disk", "RAM", "CD"],
     correctAnswer: 2
   },
   {
-    question: "Social values are primarily important for:",
-    options: ["Individual growth", "Financial security", "Harmonious living", "Physical fitness"],
+    question: "Brain of the computer is:",
+    options: ["Monitor", "Keyboard", "CPU", "RAM"],
     correctAnswer: 2
   },
   {
-    question: "The primary aim of value-based education is to:",
-    options: ["Improve literacy", "Promote scientific knowledge", "Develop human values", "Enhance technical skills"],
-    correctAnswer: 2
+    question: "MS Excel is mainly used for:",
+    options: ["Typing", "Calculations", "Drawing", "Email"],
+    correctAnswer: 1
   },
   {
-    question: "Content of value education includes:",
-    options: ["Moral stories", "Mathematical equations", "Historical dates", "Scientific theories"],
+    question: "Slide show shortcut key is:",
+    options: ["F2", "F5", "F7", "F9"],
+    correctAnswer: 1
+  },
+
+  // Programming
+  {
+    question: "C language was developed by:",
+    options: ["Dennis Ritchie", "James Gosling", "Bjarne Stroustrup", "Guido van Rossum"],
     correctAnswer: 0
   },
   {
-    question: "A child learning empathy in school is an outcome of:",
-    options: ["Civic education", "Physical education", "Value-based education", "Technical education"],
+    question: "Which symbol ends a statement in C?",
+    options: [":", ".", ";", ","],
     correctAnswer: 2
   },
   {
-    question: "Which of the following is most aligned with value-based education?",
-    options: ["Ranking system", "Competition", "Cooperation", "Business studies"],
-    correctAnswer: 2
+    question: "Array index starts from:",
+    options: ["0", "1", "-1", "Any value"],
+    correctAnswer: 0
   },
+
+  // OOP
   {
-    question: "Who plays the most influential role in early value inculcation?",
-    options: ["Friends", "Society", "Teachers", "Parents"],
-    correctAnswer: 3
-  },
-  {
-    question: "Teachers can best inculcate values by:",
-    options: ["Assigning homework", "Using fear", "Being role models", "Giving punishments"],
-    correctAnswer: 2
-  },
-  {
-    question: "Peer groups influence values through:",
-    options: ["Isolation", "Interaction and imitation", "Discipline", "Evaluation"],
-    correctAnswer: 1
-  },
-  {
-    question: "Society contributes to value inculcation by:",
-    options: ["Restricting freedom", "Encouraging materialism", "Providing norms and examples", "Promoting individualism"],
-    correctAnswer: 2
-  },
-  {
-    question: "Value inculcation is best achieved through:",
-    options: ["Forced learning", "Daily life experiences", "Online games", "Mobile phones"],
-    correctAnswer: 1
-  },
-  {
-    question: "What does the term “value” in education refer to?",
-    options: ["Material worth", "Ethical principle guiding behavior", "Price of education", "Currency"],
-    correctAnswer: 1
-  },
-  {
-    question: "Value-based education emphasizes:",
-    options: ["Theory over practice", "Rote learning", "Holistic development", "Physical training"],
-    correctAnswer: 2
-  },
-  {
-    question: "In value-based education, which method is most effective?",
-    options: ["Punishment", "Indoctrination", "Role modeling", "Competitive tests"],
-    correctAnswer: 2
-  },
-  {
-    question: "Value-based education aligns closely with:",
-    options: ["Ethical living", "Technological innovation", "Business modeling", "Sports ranking"],
+    question: "OOP stands for:",
+    options: ["Object Oriented Programming", "Open Object Program", "Original Output Program", "None"],
     correctAnswer: 0
   },
   {
-    question: "A curriculum rich in values helps promote:",
-    options: ["Memory power", "Mechanical learning", "Holistic human development", "Institutional profits"],
+    question: "Which feature supports code reusability?",
+    options: ["Encapsulation", "Polymorphism", "Inheritance", "Abstraction"],
+    correctAnswer: 2
+  },
+
+  // Data structures
+  {
+    question: "Stack works on:",
+    options: ["FIFO", "LIFO", "LILO", "FILO"],
+    correctAnswer: 1
+  },
+  {
+    question: "Queue works on:",
+    options: ["LIFO", "FILO", "FIFO", "LILO"],
+    correctAnswer: 2
+  },
+
+  // Unit 3
+  {
+    question: "Python was developed by:",
+    options: ["Dennis Ritchie", "James Gosling", "Guido van Rossum", "Bjarne Stroustrup"],
     correctAnswer: 2
   },
   {
-    question: "The National Policy on Education stresses:",
-    options: ["Vocational training only", "Science and technology", "Integration of values in education", "Privatization of schools"],
+    question: "Which symbol is used for comments in Python?",
+    options: ["//", "<!-- -->", "#", "**"],
     correctAnswer: 2
   },
   {
-    question: "Which of the following values is important in a democratic society?",
-    options: ["Obedience", "Apathy", "Responsibility", "Fear"],
-    correctAnswer: 2
+    question: "DBMS stands for:",
+    options: ["Data Binary Management System", "Database Management System", "Digital Base Management System", "Data Backup Management System"],
+    correctAnswer: 1
   },
   {
-    question: "Content of value education includes:",
-    options: ["Moral stories", "Mathematical equations", "Historical dates", "Scientific theories"],
+    question: "SQL stands for:",
+    options: ["Structured Query Language", "Simple Query Language", "Sequential Query Language", "Standard Query Link"],
     correctAnswer: 0
-  },
-  {
-    question: "Which characteristic is associated with value-based education?",
-    options: ["Materialism", "Moral instruction", "Economic training", "Political theory"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which of the following is NOT a component of value-based education?",
-    options: ["Personal development", "Social justice", "Ethical reasoning", "Industrial training"],
-    correctAnswer: 3
-  },
-  {
-    question: "Value-based education nurtures:",
-    options: ["Selfishness", "Arrogance", "Altruism", "Isolation"],
-    correctAnswer: 2
-  },
-  {
-    question: "Character-building is a:",
-    options: ["Physical process", "Scientific process", "Psychological outcome", "Value education goal"],
-    correctAnswer: 3
-  },
-  {
-    question: "Which method is commonly used in value-based teaching?",
-    options: ["Debate", "Memorization", "Dictation", "Experimentation"],
-    correctAnswer: 0
-  },
-  {
-    question: "Value-based education aligns closely with:",
-    options: ["Ethical living", "Technological innovation", "Business modeling", "Sports ranking"],
-    correctAnswer: 0
-  },
-  {
-    question: "Which family member influences emotional and moral growth the most?",
-    options: ["Cousin", "Father", "Grandfather", "Mother"],
-    correctAnswer: 3
-  },
-  {
-    question: "School curriculum should integrate values through:",
-    options: ["Hidden curriculum", "Competitive exams", "Syllabus skipping", "Financial aid"],
-    correctAnswer: 0
-  },
-  {
-    question: "Teachers can encourage value learning by:",
-    options: ["Encouraging open discussion", "Discouraging questions", "Prioritizing marks", "Avoiding feedback"],
-    correctAnswer: 0
-  },
-  {
-    question: "The role of peer groups becomes significant especially during:",
-    options: ["Infancy", "Adolescence", "Adulthood", "Old age"],
-    correctAnswer: 1
-  },
-  {
-    question: "A value-laden environment at home leads to:",
-    options: ["Confusion", "Stability and clarity in character", "Rebellion", "Isolation"],
-    correctAnswer: 1
-  },
-  {
-    question: "What term describes \"morals\"?",
-    options: ["Legal rules enforced by governments", "Personal beliefs of right and wrong", "Professional codes of conduct", "Company policies"],
-    correctAnswer: 1
-  },
-  {
-    question: "Ethics primarily refers to:",
-    options: ["Laws created by the government", "Personal religious beliefs", "Principles governing behavior in society", "Financial responsibilities"],
-    correctAnswer: 2
-  },
-  {
-    question: "Values are:",
-    options: ["Universal moral standards", "Personal principles or standards of behavior", "Government laws", "Business regulations"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which of the following is a key difference between morals and ethics?",
-    options: ["Morals are more formal than ethics", "Ethics are imposed by society; morals are personal", "Ethics are subjective; morals are universal", "There is no difference"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which of these is an example of a value?",
-    options: ["Stealing is wrong", "Loyalty", "Not cheating on a test", "Paying taxes"],
-    correctAnswer: 1
-  },
-  {
-    question: "Ethics in a profession are usually defined by:",
-    options: ["Individual employees", "Personal beliefs", "Professional bodies or organizations", "Customer demands"],
-    correctAnswer: 2
-  },
-  {
-    question: "Morality is often derived from:",
-    options: ["Peer pressure", "Government rules", "Cultural and religious backgrounds", "Workplace regulations"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which of the following would most likely be considered an ethical issue?",
-    options: ["Choosing between two job offers", "Deciding whether to report a colleague’s misconduct", "Applying for a vacation", "Selecting office furniture"],
-    correctAnswer: 1
-  },
-  {
-    question: "Personal values influence:",
-    options: ["Only professional behavior", "Only personal relationships", "Both personal and professional decisions", "Only financial decisions"],
-    correctAnswer: 2
-  },
-  {
-    question: "A person who adheres strictly to their own moral code is demonstrating:",
-    options: ["Ethics", "Values", "Integrity", "Authority"],
-    correctAnswer: 2
-  },
-  {
-    question: "An ethical dilemma involves:",
-    options: ["Choosing the easiest way", "Choosing between two right or wrong choices", "Choosing between conflicting moral obligations", "Avoiding responsibilities"],
-    correctAnswer: 2
-  },
-  {
-    question: "In an ethical dilemma, the key challenge is to:",
-    options: ["Follow legal guidelines", "Avoid punishment", "Decide what is the \"right\" course of action", "Please your manager"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which of this best represents an ethical dilemma?",
-    options: ["Being late to work", "Receiving two job offers", "Witnessing a friend cheating in an exam", "Choosing a lunch option"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which of the following is least likely to help resolve an ethical dilemma?",
-    options: ["Personal bias", "Professional codes", "Company policy", "Seeking advice"],
-    correctAnswer: 0
-  },
-  {
-    question: "In resolving ethical dilemmas, it is important to:",
-    options: ["Avoid accountability", "Protect only your own interests", "Consider the impact on all stakeholders", "Ignore other viewpoints"],
-    correctAnswer: 2
-  },
-  {
-    question: "Professional integrity means:",
-    options: ["Doing what is easy", "Following orders blindly", "Acting honestly and consistently with values", "Avoiding hard work"],
-    correctAnswer: 2
-  },
-  {
-    question: "Accountability in the workplace involves:",
-    options: ["Delegating your responsibilities", "Blaming others for mistakes", "Taking responsibility for actions and outcomes", "Keeping quiet"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which behavior shows lack of accountability?",
-    options: ["Apologizing for an error", "Blaming team members for a failure", "Completing work on time", "Giving honest feedback"],
-    correctAnswer: 1
-  },
-  {
-    question: "Ethical leadership requires:",
-    options: ["Being popular", "Prioritizing results over people", "Setting an example of ethical behavior", "Hiding mistakes"],
-    correctAnswer: 2
-  },
-  {
-    question: "A key principle of professional ethics is:",
-    options: ["Secrecy", "Bias", "Fairness", "Profit"],
-    correctAnswer: 2
-  },
-  {
-    question: "Using company time for personal business is considered:",
-    options: ["Efficient", "Ethical", "Unethical", "Acceptable"],
-    correctAnswer: 2
-  },
-  {
-    question: "Ethical practices at work promote:",
-    options: ["Corruption", "Trust and respect", "Miscommunication", "Conflict"],
-    correctAnswer: 1
-  },
-  {
-    question: "Unethical behavior in the workplace can lead to:",
-    options: ["Higher motivation", "Better reputation", "Legal and reputational damage", "Employee loyalty"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which of these is an example of ethical behavior?",
-    options: ["Manipulating data", "Lying to customers", "Reporting a conflict of interest", "Ignoring rules"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which is a common cause of unethical behavior?",
-    options: ["Strong values", "Clear guidelines", "Pressure to meet unrealistic targets", "Ethical leadership"],
-    correctAnswer: 2
-  },
-  {
-    question: "Maintaining a healthy work-life balance helps improve:",
-    options: ["Physical appearance", "Productivity and mental health", "Financial fraud", "Team conflict"],
-    correctAnswer: 1
-  },
-  {
-    question: "An employee who takes regular breaks and leaves on time is focusing on:",
-    options: ["Work-life balance", "Avoiding work", "Laziness", "Disrespect"],
-    correctAnswer: 0
-  },
-  {
-    question: "Work-life imbalance often leads to:",
-    options: ["Career growth", "Better time management", "Stress and burnout", "Job promotions"],
-    correctAnswer: 2
-  },
-  {
-    question: "Ethical workplaces support mental well-being by:",
-    options: ["Overloading employees", "Encouraging 24/7 availability", "Providing flexible work options", "Ignoring personal needs"],
-    correctAnswer: 2
-  },
-  {
-    question: "Balancing personal and professional life means:",
-    options: ["Ignoring one for the other", "Setting healthy boundaries", "Working continuously", "Being available always"],
-    correctAnswer: 1
-  },
-  {
-    question: "A breach of professional ethics can lead to:",
-    options: ["Promotion", "Recognition", "Disciplinary action or legal consequences", "Awards"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which of the following is a sign of professional integrity?",
-    options: ["Taking credit for others’ work", "Withholding important information", "Being truthful even when it is hard", "Ignoring deadlines"],
-    correctAnswer: 2
-  },
-  {
-    question: "Transparency and honesty at work are signs of:",
-    options: ["Weakness", "Integrity", "Competition", "Aggression"],
-    correctAnswer: 1
-  },
-  {
-    question: "An accountable employee is one who:",
-    options: ["Delegates all work", "Owns up to mistakes", "Ignores issues", "Avoids responsibility"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which of these is not a part of professional ethics?",
-    options: ["Integrity", "Bias", "Responsibility", "Fairness"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which factor contributes to work-life balance?",
-    options: ["Job insecurity", "Poor communication", "Time management", "Conflict"],
-    correctAnswer: 2
-  },
-  {
-    question: "Workplace accountability encourages:",
-    options: ["Blaming others", "Denial", "Ownership of actions", "Laziness"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which of these behaviors is unethical?",
-    options: ["Admitting mistakes", "Cheating on work hours", "Respecting co-workers", "Following rules"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which is a common cause of unethical behavior?",
-    options: ["Strong values", "Clear guidelines", "Pressure to meet unrealistic targets", "Ethical leadership"],
-    correctAnswer: 2
-  },
-  {
-    question: "Mental well-being in the workplace is improved by:",
-    options: ["Lack of communication", "Constant surveillance", "Supportive and respectful environment", "Overload of tasks"],
-    correctAnswer: 2
-  },
-  {
-    question: "Ethical organizations usually have:",
-    options: ["High stress levels", "Clear communication and values", "Undefined goals", "Frequent conflicts"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which factor contributes to work-life balance?",
-    options: ["Job insecurity", "Poor communication", "Time management", "Conflict"],
-    correctAnswer: 2
-  },
-  {
-    question: "Workplace accountability encourages:",
-    options: ["Blaming others", "Denial", "Ownership of actions", "Laziness"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which of these behaviors is unethical?",
-    options: ["Admitting mistakes", "Cheating on work hours", "Respecting co-workers", "Following rules"],
-    correctAnswer: 1
-  },
-  {
-    question: "Mental well-being in the workplace is improved by:",
-    options: ["Lack of communication", "Constant surveillance", "Supportive and respectful environment", "Overload of tasks"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which best describes \"diversity\"?",
-    options: ["Having different ideas in a workplace", "Recognizing and valuing differences among people", "Treating everyone the same regardless of identity", "Encouraging conformity in teams"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is the main goal of inclusivity in a diverse environment?",
-    options: ["Increasing competition", "Enforcing uniformity", "Ensuring everyone feels welcomed, respected, and valued", "Promoting one culture above others"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which of the following is an example of cultural insensitivity?",
-    options: ["Celebrating multiple cultural holidays", "Using slang or stereotypes when speaking about another culture", "Providing prayer space at work", "Learning a few words in a colleague's native language"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is unconscious bias?",
-    options: ["A deliberate decision to discriminate", "An unknown allergy to a culture", "A learned behavior from a different culture", "Automatic judgments based on stereotypes"],
-    correctAnswer: 3
-  },
-  {
-    question: "Cultural sensitivity requires:",
-    options: ["Ignoring cultural differences", "Learning and adapting to cultural norms different from your own", "Assuming your culture is superior", "Speaking only your native language"],
-    correctAnswer: 1
-  },
-  {
-    question: "Inclusive language is:",
-    options: ["Neutral and respectful of all people", "Based only on traditional roles", "Designed to confuse people", "Meant to exclude specific groups"],
-    correctAnswer: 0
-  },
-  {
-    question: "Which law in many countries supports workplace diversity?",
-    options: ["Labor Protection Act", "Equal Employment Opportunity laws", "Safety at Work Act", "Productivity and Efficiency Code"],
-    correctAnswer: 1
-  },
-  {
-    question: "A culturally inclusive classroom would:",
-    options: ["Teach only the dominant culture’s history", "Discourage multilingual learning", "Incorporate materials from many cultures", "Avoid discussing diversity"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which of the following is NOT a benefit of workplace diversity?",
-    options: ["Greater innovation", "Improved decision-making", "Reduced productivity due to different opinions", "Enhanced employee engagement"],
-    correctAnswer: 2
-  },
-  {
-    question: "Stereotyping can lead to:",
-    options: ["Better understanding between cultures", "Fair treatment", "Misjudgement and discrimination", "Effective teamwork"],
-    correctAnswer: 2
-  },
-  {
-    question: "Inter sectionalist considers:",
-    options: ["Only race and gender", "One identity at a time", "Multiple overlapping social identities", "Nationality as the sole factor"],
-    correctAnswer: 2
-  },
-  {
-    question: "Micro aggressions are:",
-    options: ["Overt acts of discrimination", "Subtle, often unintentional insults toward marginalized groups", "Legal actions against diversity", "Acts of inclusion"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which approach promotes inclusivity?",
-    options: ["One-size-fits-all policy", "Culturally responsive practices", "Cultural assimilation only", "Ignoring cultural differences"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is cultural competence?",
-    options: ["Being fluent in many languages", "Ability to interact effectively with people of different cultures", "Memorizing cultural facts", "Travelling frequently"],
-    correctAnswer: 1
-  },
-  {
-    question: "A culturally sensitive leader will:",
-    options: ["Enforce their cultural norms", "Ignore differences in the team", "Acknowledge and leverage diversity in the group", "Promote assimilation"],
-    correctAnswer: 2
-  },
-  {
-    question: "What is the primary goal of social justice?",
-    options: ["Economic growth", "Political dominance", "Equal rights and opportunities for all", "Technological advancement"],
-    correctAnswer: 2
-  },
-  {
-    question: "Civic engagement involves:",
-    options: ["Watching news passively", "Avoiding social issues", "Participating in community and public affairs", "Playing online games"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which of the following is a major cause of gender inequality?",
-    options: ["Natural differences", "Cultural and social norms", "Equal access to education", "Economic equality"],
-    correctAnswer: 1
-  },
-  {
-    question: "How can youth help reduce illiteracy?",
-    options: ["Avoiding education-related volunteering", "Promoting rote learning", "Participating in adult literacy programs", "Rejecting education"],
-    correctAnswer: 2
-  },
-  {
-    question: "What is a major effect of illiteracy in society?",
-    options: ["Economic prosperity", "Increased civic participation", "Poverty and unemployment", "Technological development"],
-    correctAnswer: 2
-  },
-  {
-    question: "Literacy helps individuals to:",
-    options: ["Stay dependent on others", "Avoid active participation", "Make informed decisions", "Reject education"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which activity best demonstrates youth civic responsibility?",
-    options: ["Ignoring community problems", "Organizing a community clean-up drive", "Spreading rumors on social media", "Avoiding public discussions"],
-    correctAnswer: 1
-  },
-  {
-    question: "One effective method to address gender stereotypes is:",
-    options: ["Promoting traditional gender roles", "Ignoring the problem", "Gender-sensitive education", "Limiting girls’ education"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which skill is most important for youth in civic engagement?",
-    options: ["Memorization", "Passive listening", "Critical thinking and communication", "Isolation"],
-    correctAnswer: 2
-  },
-  {
-    question: "Why is youth participation essential in solving societal issues?",
-    options: ["They are the majority voters", "They follow orders without question", "They bring energy, innovation, and long-term commitment", "They avoid societal change"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which action best demonstrates community service?",
-    options: ["Watching a movie", "Cleaning a local park", "Shopping at a mall", "Attending a concert"],
-    correctAnswer: 1
-  },
-  {
-    question: "Volunteering can help individuals develop:",
-    options: ["Bad habits", "Social isolation", "Communication and teamwork skills", "Laziness"],
-    correctAnswer: 2
-  },
-  {
-    question: "One benefit of volunteering is:",
-    options: ["Reduced physical activity", "Building a criminal record", "Improving mental health", "Increasing stress"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which sector often depends heavily on volunteers?",
-    options: ["Private corporations", "Non-profit organizations", "Luxury hotels", "Shopping malls"],
-    correctAnswer: 1
-  },
-  {
-    question: "How can one identify a suitable volunteering opportunity?",
-    options: ["Choose the one that pays the most", "Follow your passion and skills", "Copy what friends are doing", "Pick randomly"],
-    correctAnswer: 1
-  },
-  {
-    question: "What quality is most important in a volunteer?",
-    options: ["Greed", "Commitment", "Inactivity", "Selfishness"],
-    correctAnswer: 1
-  },
-  {
-    question: "Community engagement involves:",
-    options: ["Isolating from society", "Destroying public property", "Actively working with others to solve local issues", "Ignoring community problems"],
-    correctAnswer: 2
-  },
-  {
-    question: "A student volunteer at a hospital is likely helping with:",
-    options: ["Surgery", "Patient support services", "Legal documentation", "Building maintenance"],
-    correctAnswer: 1
-  },
-  {
-    question: "Volunteering during disasters can include:",
-    options: ["Spreading rumours", "Hoarding resources", "Providing food and shelter", "Avoiding help"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which is a long-term benefit of community service?",
-    options: ["Instant wealth", "Legal immunity", "Personal growth and community development", "Social unrest"],
-    correctAnswer: 2
-  },
-  {
-    question: "What motivates many people to volunteer?",
-    options: ["Boredom", "Desire to give back to the community", "Avoidance of work", "Financial reward"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which of the following is not a benefit of community engagement?",
-    options: ["Social connection", "Civic pride", "Community improvement", "Social isolation"],
-    correctAnswer: 3
-  },
-  {
-    question: "Which group often engages in community service as part of personal development?",
-    options: ["Tourists", "School and college students", "Celebrities only", "Business tycoons only"],
-    correctAnswer: 1
-  },
-  {
-    question: "The best way to identify a suitable volunteering opportunity is to:",
-    options: ["Choose the one that pays the most", "Follow your passion and skills", "Copy what friends are doing", "Pick randomly"],
-    correctAnswer: 1
-  },
-  {
-    question: "Community service can also contribute to:",
-    options: ["Academic failure", "Resume building and career development", "Unemployment", "Social unrest"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is an inclusive education system?",
-    options: ["One that excludes students with disabilities", "One that accommodates all learners regardless of background or ability", "One that only admits wealthy students", "One that discourages diversity"],
-    correctAnswer: 1
-  },
-  {
-    question: "How can social media be used for social justice?",
-    options: ["By spreading hate speech", "By amplifying awareness and mobilizing support for causes", "By promoting fake news only", "By discouraging activism"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is the first step in addressing gender inequality?",
-    options: ["Ignoring the issue", "Educating people about gender biases and promoting equality", "Encouraging discrimination", "Limiting opportunities for one gender"],
-    correctAnswer: 1
-  },
-  {
-    question: "Why is digital literacy important for modern education?",
-    options: ["It restricts access to information", "It helps students navigate technology for learning and employment", "It promotes outdated teaching methods", "It discourages critical thinking"],
-    correctAnswer: 1
-  },
-  {
-    question: "How can youth advocate for climate justice?",
-    options: ["By ignoring environmental policies", "By organizing tree-planting drives and reducing plastic waste", "By promoting deforestation", "By opposing renewable energy"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is the impact of peer education in tackling societal issues?",
-    options: ["It has no influence on youth", "It empowers young people to educate each other on critical topics like health and equality", "It spreads misinformation", "It discourages teamwork"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which skill is most developed through volunteering?",
-    options: ["Isolation", "Leadership and teamwork", "Laziness", "Selfishness"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is a long-term benefit of community service?",
-    options: ["Increased social disconnect", "Stronger community bonds and personal fulfillment", "Encouragement of corruption", "Promotion of inequality"],
-    correctAnswer: 1
-  },
-  {
-    question: "How can volunteering reduce prejudice?",
-    options: ["By keeping communities segregated", "By fostering interactions between diverse groups", "By promoting stereotypes", "By avoiding marginalized populations"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is an example of virtual volunteering?",
-    options: ["Ignoring online petitions", "Tutoring students via video calls", "Spamming social media", "Avoiding digital platforms"],
-    correctAnswer: 1
-  },
-  {
-    question: "Why should corporations encourage employee volunteering?",
-    options: ["To reduce productivity", "To boost morale and social responsibility", "To discourage teamwork", "To increase workplace conflicts"],
-    correctAnswer: 1
-  },
-  {
-    question: "Volunteers are driven by:",
-    options: ["Greed", "Social commitment", "Politics", "Bias"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which behavior demonstrates inclusivity in a workplace?",
-    options: ["Only hiring people from one background", "Providing equal opportunities for employees of all genders and ethnicities", "Discouraging employees from sharing their cultural practices", "Ignoring discrimination complaints"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is \"intersectionality\" in social justice?",
-    options: ["Ignoring overlapping forms of discrimination", "Recognizing how race, gender, class, and other identities create unique experiences of oppression", "Promoting only one aspect of diversity", "Eliminating cultural differences"],
-    correctAnswer: 1
-  },
-  {
-    question: "How can schools promote cultural sensitivity?",
-    options: ["By discouraging discussions about different cultures", "By celebrating multicultural events and teaching inclusive history", "By enforcing a single language", "By segregating students based on ethnicity"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is an inclusive policy?",
-    options: ["Banning religious attire in public spaces", "Providing prayer rooms for people of all faiths in an institution", "Hiring only men for leadership roles", "Refusing to accommodate people with disabilities"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is the purpose of affirmative action?",
-    options: ["To discriminate against minorities", "To provide equal opportunities for historically marginalized groups", "To eliminate diversity in workplaces", "To favor only the majority population"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is a barrier to inclusivity?",
-    options: ["Open communication", "Prejudice and stereotypes", "Cultural exchange", "Diversity training"],
-    correctAnswer: 1
-  },
-  {
-    question: "Respect for diversity encourages:",
-    options: ["Uniformity of thought", "Discrimination", "Acceptance of differences", "Isolation"],
-    correctAnswer: 2
-  },
-  {
-    question: "Youth volunteering improves:",
-    options: ["Social gaps", "Community strength", "Isolation", "Division"],
-    correctAnswer: 1
-  },
-  {
-    question: "Respecting others’ beliefs and customs is a part of:",
-    options: ["Social exclusion", "Cultural sensitivity", "Ethnocentrism", "Prejudice"],
-    correctAnswer: 1
-  },
-  {
-    question: "Educated youth can contribute by:",
-    options: ["Spreading awareness", "Isolating communities", "Avoiding activism", "Opposing education"],
-    correctAnswer: 0
-  },
-  {
-    question: "Discrimination in job hiring violates:",
-    options: ["Social justice", "Economic growth", "Personal rights", "Educational standards"],
-    correctAnswer: 0
-  },
-  {
-    question: "Diversity in a group improves:",
-    options: ["Conflict", "Creativity and Innovation", "Monotony", "Uniformity"],
-    correctAnswer: 1
-  },
-  {
-    question: "What term describes \"diversity\"?",
-    options: ["Having different ideas in a workplace", "Recognizing and valuing differences among people", "Treating everyone the same regardless of identity", "Encouraging conformity in teams"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is the main goal of inclusivity in a diverse environment?",
-    options: ["Increasing competition", "Enforcing uniformity", "Ensuring everyone feels welcomed, respected, and valued", "Promoting one culture above others"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which of the following is an example of cultural insensitivity?",
-    options: ["Celebrating multiple cultural holidays", "Using slang or stereotypes when speaking about another culture", "Providing prayer space at work", "Learning a few words in a colleague's native language"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is unconscious bias?",
-    options: ["A deliberate decision to discriminate", "An unknown allergy to a culture", "A learned behavior from a different culture", "Automatic judgments based on stereotypes"],
-    correctAnswer: 3
-  },
-  {
-    question: "Cultural sensitivity requires:",
-    options: ["Ignoring cultural differences", "Learning and adapting to cultural norms different from your own", "Assuming your culture is superior", "Speaking only your native language"],
-    correctAnswer: 1
-  },
-  {
-    question: "Inclusive language is:",
-    options: ["Neutral and respectful of all people", "Based only on traditional roles", "Designed to confuse people", "Meant to exclude specific groups"],
-    correctAnswer: 0
-  },
-  {
-    question: "Which law in many countries supports workplace diversity?",
-    options: ["Labor Protection Act", "Equal Employment Opportunity laws", "Safety at Work Act", "Productivity and Efficiency Code"],
-    correctAnswer: 1
-  },
-  {
-    question: "A culturally inclusive classroom would:",
-    options: ["Teach only the dominant culture’s history", "Discourage multilingual learning", "Incorporate materials from many cultures", "Avoid discussing diversity"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which of the following is NOT a benefit of workplace diversity?",
-    options: ["Greater innovation", "Improved decision-making", "Reduced productivity due to different opinions", "Enhanced employee engagement"],
-    correctAnswer: 2
-  },
-  {
-    question: "Stereotyping can lead to:",
-    options: ["Better understanding between cultures", "Fair treatment", "Misjudgement and discrimination", "Effective teamwork"],
-    correctAnswer: 2
-  },
-  {
-    question: "Inter sectionalist considers:",
-    options: ["Only race and gender", "One identity at a time", "Multiple overlapping social identities", "Nationality as the sole factor"],
-    correctAnswer: 2
-  },
-  {
-    question: "Micro aggressions are:",
-    options: ["Overt acts of discrimination", "Subtle, often unintentional insults toward marginalized groups", "Legal actions against diversity", "Acts of inclusion"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which approach promotes inclusivity?",
-    options: ["One-size-fits-all policy", "Culturally responsive practices", "Cultural assimilation only", "Ignoring cultural differences"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is cultural competence?",
-    options: ["Being fluent in many languages", "Ability to interact effectively with people of different cultures", "Memorizing cultural facts", "Travelling frequently"],
-    correctAnswer: 1
-  },
-  {
-    question: "A culturally sensitive leader will:",
-    options: ["Enforce their cultural norms", "Ignore differences in the team", "Acknowledge and leverage diversity in the group", "Promote assimilation"],
-    correctAnswer: 2
-  },
-  {
-    question: "What is the primary purpose of community service?",
-    options: ["To earn money", "To benefit society without expecting payment", "To gain fame", "To avoid personal growth"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which of the following is an example of community service?",
-    options: ["Watching a movie", "Cleaning a local park", "Shopping at a mall", "Attending a concert"],
-    correctAnswer: 1
-  },
-  {
-    question: "Volunteering can help individuals develop:",
-    options: ["Bad habits", "Social isolation", "Communication and teamwork skills", "Laziness"],
-    correctAnswer: 2
-  },
-  {
-    question: "One benefit of volunteering is:",
-    options: ["Reduced physical activity", "Building a criminal record", "Improving mental health", "Increasing stress"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which sector often depends heavily on volunteers?",
-    options: ["Private corporations", "Non-profit organizations", "Luxury hotels", "Shopping malls"],
-    correctAnswer: 1
-  },
-  {
-    question: "What motivates many people to volunteer?",
-    options: ["Boredom", "Desire to give back to the community", "Avoidance of work", "Financial reward"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which of the following is not a benefit of community engagement?",
-    options: ["Social connection", "Civic pride", "Community improvement", "Social isolation"],
-    correctAnswer: 3
-  },
-  {
-    question: "Which group often engages in community service as part of personal development?",
-    options: ["Tourists", "School and college students", "Celebrities only", "Business tycoons only"],
-    correctAnswer: 1
-  },
-  {
-    question: "The best way to identify a suitable volunteering opportunity is to:",
-    options: ["Choose the one that pays the most", "Follow your passion and skills", "Copy what friends are doing", "Pick randomly"],
-    correctAnswer: 1
-  },
-  {
-    question: "Community service can also contribute to:",
-    options: ["Academic failure", "Resume building and career development", "Unemployment", "Social unrest"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is a long-term benefit of community service?",
-    options: ["Increased social disconnect", "Stronger community bonds and personal fulfillment", "Encouragement of corruption", "Promotion of inequality"],
-    correctAnswer: 1
-  },
-  {
-    question: "How can volunteering reduce prejudice?",
-    options: ["By keeping communities segregated", "By fostering interactions between diverse groups", "By promoting stereotypes", "By avoiding marginalized populations"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is an example of virtual volunteering?",
-    options: ["Ignoring online petitions", "Tutoring students via video calls", "Spamming social media", "Avoiding digital platforms"],
-    correctAnswer: 1
-  },
-  {
-    question: "Why should corporations encourage employee volunteering?",
-    options: ["To reduce productivity", "To boost morale and social responsibility", "To discourage teamwork", "To increase workplace conflicts"],
-    correctAnswer: 1
-  },
-  {
-    question: "Volunteers are driven by:",
-    options: ["Greed", "Social commitment", "Politics", "Bias"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which behavior demonstrates inclusivity in a workplace?",
-    options: ["Only hiring people from one background", "Providing equal opportunities for employees of all genders and ethnicities", "Discouraging employees from sharing their cultural practices", "Ignoring discrimination complaints"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is \"intersectionality\" in social justice?",
-    options: ["Ignoring overlapping forms of discrimination", "Recognizing how race, gender, class, and other identities create unique experiences of oppression", "Promoting only one aspect of diversity", "Eliminating cultural differences"],
-    correctAnswer: 1
-  },
-  {
-    question: "How can schools promote cultural sensitivity?",
-    options: ["By discouraging discussions about different cultures", "By celebrating multicultural events and teaching inclusive history", "By enforcing a single language", "By segregating students based on ethnicity"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is an inclusive policy?",
-    options: ["Banning religious attire in public spaces", "Providing prayer rooms for people of all faiths in an institution", "Hiring only men for leadership roles", "Refusing to accommodate people with disabilities"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is the purpose of affirmative action?",
-    options: ["To discriminate against minorities", "To provide equal opportunities for historically marginalized groups", "To eliminate diversity in workplaces", "To favor only the majority population"],
-    correctAnswer: 1
-  },
-  {
-    question: "What is a barrier to inclusivity?",
-    options: ["Open communication", "Prejudice and stereotypes", "Cultural exchange", "Diversity training"],
-    correctAnswer: 1
-  },
-  {
-    question: "Respect for diversity encourages:",
-    options: ["Uniformity of thought", "Discrimination", "Acceptance of differences", "Isolation"],
-    correctAnswer: 2
-  },
-  {
-    question: "Youth volunteering improves:",
-    options: ["Social gaps", "Community strength", "Isolation", "Division"],
-    correctAnswer: 1
-  },
-  {
-    question: "Respecting others’ beliefs and customs is a part of:",
-    options: ["Social exclusion", "Cultural sensitivity", "Ethnocentrism", "Prejudice"],
-    correctAnswer: 1
-  },
-  {
-    question: "Educated youth can contribute by:",
-    options: ["Spreading awareness", "Isolating communities", "Avoiding activism", "Opposing education"],
-    correctAnswer: 0
-  },
-  {
-    question: "Discrimination in job hiring violates:",
-    options: ["Social justice", "Economic growth", "Personal rights", "Educational standards"],
-    correctAnswer: 0
-  },
-  {
-    question: "Diversity in a group improves:",
-    options: ["Conflict", "Creativity and Innovation", "Monotony", "Uniformity"],
-    correctAnswer: 1
   }
 ];
-
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
