@@ -3,846 +3,189 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Online Exam</title>
-<script src="https://cdn.tailwindcss.com/3.4.16"></script>
-<script>tailwind.config={theme:{extend:{colors:{primary:'#4f46e5',secondary:'#818cf8'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+<title>CECA Online Exam</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+
 <style>
-:where([class^="ri-"])::before { content: "\f3c2"; }
-body {
-font-family: 'Inter', sans-serif;
-background-color: #f9fafb;
+body { font-family: sans-serif; background:#f8fafc; }
+.custom-radio input { display:none; }
+.custom-radio label {
+  display:block; padding:15px; border:2px solid #ddd;
+  border-radius:10px; cursor:pointer;
 }
-@media (max-width: 768px) {
-.max-w-3xl {
-margin: 1rem;
-}
-.p-8 {
-padding: 1rem;
-}
-.text-3xl {
-font-size: 1.5rem;
-}
-.flex-col {
-gap: 1rem;
-}
-.space-x-8 > * + * {
-margin-left: 1rem;
-}
-}
-@media (max-width: 640px) {
-.flex-col md\:flex-row {
-flex-direction: column;
-}
-.space-x-4 {
-gap: 0.5rem;
-}
-.px-8 {
-padding-left: 1rem;
-padding-right: 1rem;
-}
-}
-.custom-radio input[type="radio"] {
-display: none;
-}
-.custom-radio input[type="radio"] + label {
-position: relative;
-padding-left: 2.5rem;
-cursor: pointer;
-display: inline-block;
-line-height: 1.5;
-}
-.custom-radio input[type="radio"] + label:before {
-content: '';
-position: absolute;
-left: 0;
-top: 0;
-width: 1.5rem;
-height: 1.5rem;
-border: 2px solid #d1d5db;
-border-radius: 50%;
-background: #fff;
-}
-.custom-radio input[type="radio"]:checked + label:after {
-content: '';
-position: absolute;
-left: 0.375rem;
-top: 0.375rem;
-width: 0.75rem;
-height: 0.75rem;
-border-radius: 50%;
-background: #4f46e5;
-}
-.custom-radio input[type="radio"]:checked + label:before {
-border-color: #4f46e5;
-}
-.timer-warning {
-animation: pulse 1.5s infinite;
-}
-@keyframes pulse {
-0% { opacity: 1; }
-50% { opacity: 0.5; }
-100% { opacity: 1; }
-}
-.progress-bar {
-height: 0.5rem;
-background-color: #e5e7eb;
-border-radius: 9999px;
-overflow: hidden;
-}
-.progress-bar-inner {
-height: 100%;
-background-color: #4f46e5;
-border-radius: 9999px;
-transition: width 0.3s ease;
-}
-.answer-review.correct {
-border-left: 4px solid #10b981;
-}
-.answer-review.incorrect {
-border-left: 4px solid #ef4444;
+.custom-radio input:checked + label {
+  border-color:#4f46e5; background:#eef2ff;
 }
 </style>
 </head>
+
 <body>
-<div class="min-h-screen flex flex-col">
-<!-- Landing Page -->
-<div id="landing-page" class="flex-1 flex flex-col">
-<header class="bg-white shadow-sm">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-<div class="text-2xl">
-  <img src="C:\Users\ADMIN\Downloads\logo-removebg-preview.png" alt="Saif Logo" class="h-10">
-</div>
-<nav>
-<ul class="flex space-x-8">
-<li><a href="#" class="text-gray-700 hover:text-primary font-medium">Home</a></li>
-<li><a href="#" class="text-gray-700 hover:text-primary font-medium">About</a></li>
-<li><a href="#" class="text-gray-700 hover:text-primary font-medium">Contact</a></li>
-</ul>
-</nav>
-</div>
-</header>
-<main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 bg-gradient-to-b from-white to-gray-50">
-<div class="max-w-3xl w-full mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-<div class="p-8 md:p-12">
-<h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6 text-center">Online Exam</h1>
-<div class="bg-blue-50 rounded-lg p-6 mb-8">
-<h2 class="text-xl font-semibold text-gray-800 mb-3">Instructions:</h2>
-<ul class="space-y-2 text-gray-700">
-<li class="flex items-start">
-<div class="w-5 h-5 flex items-center justify-center mr-2 mt-0.5">
-<i class="ri-checkbox-circle-line text-primary"></i>
-</div>
-<span>This exam contains <strong>50 multiple-choice questions</strong></span>
-</li>
-<li class="flex items-start">
-<div class="w-5 h-5 flex items-center justify-center mr-2 mt-0.5">
-<i class="ri-time-line text-primary"></i>
-</div>
-<span>You have <strong>90 minutes</strong> to complete the exam</span>
-</li>
-<li class="flex items-start">
-<div class="w-5 h-5 flex items-center justify-center mr-2 mt-0.5">
-<i class="ri-arrow-left-right-line text-primary"></i>
-</div>
-<span>You can navigate between questions using the Previous and Next buttons</span>
-</li>
-<li class="flex items-start">
-<div class="w-5 h-5 flex items-center justify-center mr-2 mt-0.5">
-<i class="ri-check-double-line text-primary"></i>
-</div>
-<span>Each correct answer is worth <strong>1 point</strong></span>
-</li>
-</ul>
-</div>
-<div class="flex items-center justify-center space-x-4 mb-6">
-<div class="text-center">
-<div class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 mx-auto mb-2">
-<div class="w-6 h-6 flex items-center justify-center text-primary">
-<i class="ri-question-line ri-lg"></i>
-</div>
-</div>
-<p class="text-sm text-gray-700">50 Questions</p>
-</div>
-<div class="text-center">
-<div class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 mx-auto mb-2">
-<div class="w-6 h-6 flex items-center justify-center text-primary">
-<i class="ri-time-line ri-lg"></i>
-</div>
-</div>
-<p class="text-sm text-gray-700">90 Minutes</p>
-</div>
-<div class="text-center">
-<div class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-100 mx-auto mb-2">
-<div class="w-6 h-6 flex items-center justify-center text-primary">
-<i class="ri-trophy-line ri-lg"></i>
-</div>
-</div>
-<p class="text-sm text-gray-700">50 Points</p>
-</div>
-</div>
-<div class="text-center">
-<button id="start-quiz-btn" class="bg-primary hover:bg-indigo-700 text-white font-medium py-3 px-8 rounded-button transition duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 whitespace-nowrap">
-Start Quiz
-</button>
-</div>
-</div>
-</div>
-</main>
-<footer class="bg-gray-800 text-white py-8">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex flex-col md:flex-row justify-between items-center">
-<div class="mb-4 md:mb-0">
-<div class="text-2xl">
-</div>
-<p class="text-gray-400 text-sm" style="text-align: center;">Test your knowledge with our interactive quizzes</p>
-</div>
-<div class="flex space-x-6">
-<a href="#" class="text-gray-400 hover:text-white">
-<div class="w-6 h-6 flex items-center justify-center">
-<i class="ri-facebook-fill"></i>
-</div>
-</a>
-<a href="#" class="text-gray-400 hover:text-white">
-<div class="w-6 h-6 flex items-center justify-center">
-<i class="ri-twitter-fill"></i>
-</div>
-</a>
-<a href="#" class="text-gray-400 hover:text-white">
-<div class="w-6 h-6 flex items-center justify-center">
-<i class="ri-instagram-fill"></i>
-</div>
-</a>
-</div>
-</div>
-<div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400 text-sm">
-© 2025 Quiz Platform. All rights reserved.
-</div>
-</div>
-</footer>
-</div>
-<!-- Quiz Interface -->
-<div id="quiz-container" class="hidden flex-1 flex flex-col">
-<header class="bg-white shadow-sm sticky top-0 z-10">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-<div class="text-2xl">
-  <img src="img/logo.png" alt="Saif Logo" class="h-10">
-</div>
-<div id="timer" class="px-4 py-2 bg-white rounded-lg shadow-sm border border-gray-200 flex items-center">
-<div class="w-5 h-5 flex items-center justify-center mr-2">
-<i class="ri-time-line text-primary"></i>
-</div>
-<span id="time-display" class="font-mono text-lg font-medium">90:00</span>
-</div>
-</div>
-</header>
-<main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 bg-gradient-to-b from-white to-gray-50">
-<div class="max-w-3xl w-full mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-<div class="p-8">
-<div class="flex items-center justify-between mb-6">
-<div class="text-sm font-medium text-gray-500">
-Question <span id="current-question">1</span> of <span id="total-questions">50</span>
-</div>
-</div>
-<div class="progress-bar mb-8">
-<div id="progress-bar-inner" class="progress-bar-inner" style="width: 2%;"></div>
-</div>
-<div id="question-container" class="mb-8">
-<h2 id="question-text" class="text-xl md:text-2xl font-semibold text-gray-900 mb-6">Which of the following most accurately defines Environmental Studies?</h2>
-<div id="options-container" class="space-y-4">
-<div class="custom-radio">
-<input type="radio" id="option-1" name="answer" value="0">
-<label for="option-1" class="text-gray-700 hover:text-gray-900">Study of economics</label>
-</div>
-<div class="custom-radio">
-<input type="radio" id="option-2" name="answer" value="1">
-<label for="option-2" class="text-gray-700 hover:text-gray-900">Study of interactions between humans and the environment</label>
-</div>
-<div class="custom-radio">
-<input type="radio" id="option-3" name="answer" value="2">
-<label for="option-3" class="text-gray-700 hover:text-gray-900">Study of political science</label>
-</div>
-<div class="custom-radio">
-<input type="radio" id="option-4" name="answer" value="3">
-<label for="option-4" class="text-gray-700 hover:text-gray-900">Study of human history</label>
-</div>
-</div>
-</div>
-<div class="flex justify-between">
-<button id="prev-btn" class="bg-white border border-gray-300 text-gray-700 font-medium py-2 px-6 rounded-button hover:bg-gray-50 transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 whitespace-nowrap"><div class="flex items-center">
-<div class="w-5 h-5 flex items-center justify-center mr-1">
-<i class="ri-arrow-left-line"></i>
-</div>
-Previous
-</div>
-</button>
-<button id="next-btn" class="bg-primary hover:bg-indigo-700 text-white font-medium py-2 px-6 rounded-button transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 whitespace-nowrap">
-<div class="flex items-center">
-Next
-<div class="w-5 h-5 flex items-center justify-center ml-1">
-<i class="ri-arrow-right-line"></i>
-</div>
-</div>
-</button>
-<button id="submit-btn" class="hidden bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-6 rounded-button transition duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 whitespace-nowrap">
-<div class="flex items-center">
-Submit Quiz
-<div class="w-5 h-5 flex items-center justify-center ml-1">
-<i class="ri-check-line"></i>
-</div>
-</div>
-</button>
-</div>
-</div>
-</div>
-</main>
-</div>
-<!-- Results Page -->
-<div id="results-container" class="hidden flex-1 flex flex-col">
-<header class="bg-white shadow-sm">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-<div class="text-2xl">
-  <img src="D:\portfolio\img\logo.png" alt="Saif Logo" class="h-10">
-</div>
-</div>
-</header>
-<main class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 bg-gradient-to-b from-white to-gray-50">
-<div class="max-w-3xl w-full mx-auto">
-<div class="bg-white shadow-lg rounded-lg overflow-hidden mb-8">
-<div class="p-8">
-<h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">Quiz Results</h1>
-<div class="flex flex-col md:flex-row justify-center items-center gap-8 mb-8">
-<div class="bg-indigo-50 rounded-lg p-6 text-center w-full md:w-1/3">
-<div class="text-5xl font-bold text-primary mb-2"><span id="score-display">0</span>/<span id="max-score">50</span></div>
-<p class="text-gray-700">Your Score</p>
-</div>
-<div class="bg-indigo-50 rounded-lg p-6 text-center w-full md:w-1/3">
-<div class="text-5xl font-bold text-primary mb-2"><span id="percentage-display">0</span>%</div>
-<p class="text-gray-700">Percentage</p>
-</div>
-<div class="bg-indigo-50 rounded-lg p-6 text-center w-full md:w-1/3">
-<div class="text-5xl font-bold text-primary mb-2"><span id="time-taken">00:00</span></div>
-<p class="text-gray-700">Time Taken</p>
-</div>
-</div>
-<div class="flex justify-center mb-8">
-<div class="inline-flex rounded-md shadow-sm" role="group">
-<button id="show-all-btn" class="bg-primary text-white px-4 py-2 rounded-l-button font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 whitespace-nowrap">
-All Questions
-</button>
-<button id="show-correct-btn" class="bg-white border-y border-r border-gray-300 text-gray-700 px-4 py-2 font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 whitespace-nowrap">
-Correct Only
-</button>
-<button id="show-incorrect-btn" class="bg-white border-y border-r border-gray-300 text-gray-700 px-4 py-2 rounded-r-button font-medium focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 whitespace-nowrap">
-Incorrect Only
-</button>
-</div>
-</div>
-<div id="answers-review" class="space-y-6 max-h-96 overflow-y-auto pr-2">
-<!-- Answer reviews will be populated here -->
-</div>
-</div>
-</div>
-<div class="text-center">
-<button id="restart-quiz-btn" class="bg-primary hover:bg-indigo-700 text-white font-medium py-3 px-8 rounded-button transition duration-200 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 whitespace-nowrap">
-Restart Quiz
-</button>
-</div>
-</div>
-</main>
-<footer class="bg-gray-800 text-white py-8">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex flex-col md:flex-row justify-between items-center">
-<div class="mb-4 md:mb-0">
-<div class="text-2xl">
-  <img src="img/logo.png" alt="Saif Logo" class="h-10">
-</div>
-<p class="text-gray-400 text-sm">Test your knowledge with our interactive quizzes</p>
-</div>
-<div class="flex space-x-6">
-<a href="#" class="text-gray-400 hover:text-white">
-<div class="w-6 h-6 flex items-center justify-center">
-<i class="ri-facebook-fill"></i>
-</div>
-</a>
-<a href="#" class="text-gray-400 hover:text-white">
-<div class="w-6 h-6 flex items-center justify-center">
-<i class="ri-twitter-fill"></i>
-</div>
-</a>
-<a href="#" class="text-gray-400 hover:text-white">
-<div class="w-6 h-6 flex items-center justify-center">
-<i class="ri-instagram-fill"></i>
-</div>
-</a>
-</div>
-</div>
-<div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400 text-sm">
-© 2025 Quiz Platform. All rights reserved.
-</div>
-</div>
-</footer>
-</div>
-</div>
+
+<!-- LANDING -->
+<div id="landing" class="h-screen flex items-center justify-center">
+  <div class="text-center">
+    <h1 class="text-3xl font-bold mb-6">Online Exam</h1>
+
+    <button onclick="startExam(1)" class="bg-indigo-600 text-white px-6 py-3 rounded m-2">Set 1</button>
+    <button onclick="startExam(2)" class="bg-green-600 text-white px-6 py-3 rounded m-2">Set 2</button>
+    <button onclick="startExam(3)" class="bg-purple-600 text-white px-6 py-3 rounded m-2">Set 3</button>
+  </div>
+</div>
+
+<!-- EXAM -->
+<div id="exam" class="hidden p-6 max-w-3xl mx-auto">
+
+  <div class="flex justify-between mb-4">
+    <h2 id="qNum"></h2>
+    <div id="timer" class="text-red-600 font-bold"></div>
+  </div>
+
+  <h3 id="question" class="text-xl font-semibold mb-6"></h3>
+
+  <div id="options"></div>
+
+  <div class="flex justify-between mt-6">
+    <button onclick="nav(-1)">Prev</button>
+    <button onclick="nav(1)" id="nextBtn">Next</button>
+    <button onclick="finish()" id="submitBtn" class="hidden">Submit</button>
+  </div>
+
+</div>
+
+<!-- RESULT -->
+<div id="result" class="hidden text-center mt-20">
+  <h1 class="text-3xl font-bold mb-4">Result</h1>
+  <h2 id="score"></h2>
+  <button onclick="location.reload()" class="mt-4 bg-gray-200 px-4 py-2 rounded">Restart</button>
+</div>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-const questionPool =[
-  {
-    question: "An article is bought for ₹800 and sold for ₹1,000. Find the profit percent.",
-    options: ["20%", "22%", "25%", "30%"],
-    correctAnswer: 2
-  },
-  {
-    question: "Selling price is ₹1,200 and gain is 20%. Find cost price.",
-    options: ["₹900", "₹1,000", "₹1,050", "₹1,100"],
-    correctAnswer: 1
-  },
-  {
-    question: "HCF of 18 and 24 is",
-    options: ["3", "6", "9", "12"],
-    correctAnswer: 1
-  },
-  {
-    question: "LCM of 10 and 15 is",
-    options: ["20", "25", "30", "40"],
-    correctAnswer: 2
-  },
-  {
-    question: "Average of 5, 10, 15 is",
-    options: ["8", "10", "12", "15"],
-    correctAnswer: 1
-  },
-  {
-    question: "Distance covered in 3 hours at 50 km/hr is",
-    options: ["120 km", "140 km", "150 km", "180 km"],
-    correctAnswer: 2
-  },
-  {
-    question: "Relative speed of two trains moving opposite at 40 & 60 km/hr is",
-    options: ["20", "60", "80", "100"],
-    correctAnswer: 3
-  },
-  {
-    question: "Work and time are",
-    options: ["Directly proportional", "Inversely proportional", "Equal", "Independent"],
-    correctAnswer: 1
-  },
-  {
-    question: "Ratio of 15 and 20 is",
-    options: ["3:4", "4:3", "2:3", "5:6"],
-    correctAnswer: 0
-  },
-  {
-    question: "SI on ₹1,000 at 10% for 1 year is",
-    options: ["₹50", "₹100", "₹150", "₹200"],
-    correctAnswer: 1
-  },
 
-  // Reasoning
-  {
-    question: "1, 1, 2, 3, 5, ?",
-    options: ["6", "7", "8", "9"],
-    correctAnswer: 2
-  },
-  {
-    question: "2, 6, 18, 54, ?",
-    options: ["108", "162", "216", "324"],
-    correctAnswer: 1
-  },
-  {
-    question: "Apple, Mango, Banana, Carrot",
-    options: ["Apple", "Mango", "Banana", "Carrot"],
-    correctAnswer: 3
-  },
-
-  // Unit 2
-  {
-    question: "Which number system uses base 2?",
-    options: ["Decimal", "Binary", "Octal", "Hexadecimal"],
-    correctAnswer: 1
-  },
-  {
-    question: "CPU stands for:",
-    options: ["Central Program Unit", "Central Processing Unit", "Computer Processing Unit", "Control Processing Unit"],
-    correctAnswer: 1
-  },
-  {
-    question: "Which memory is volatile?",
-    options: ["ROM", "Hard Disk", "RAM", "CD"],
-    correctAnswer: 2
-  },
-  {
-    question: "Brain of the computer is:",
-    options: ["Monitor", "Keyboard", "CPU", "RAM"],
-    correctAnswer: 2
-  },
-  {
-    question: "MS Excel is mainly used for:",
-    options: ["Typing", "Calculations", "Drawing", "Email"],
-    correctAnswer: 1
-  },
-  {
-    question: "Slide show shortcut key is:",
-    options: ["F2", "F5", "F7", "F9"],
-    correctAnswer: 1
-  },
-
-  // Programming
-  {
-    question: "C language was developed by:",
-    options: ["Dennis Ritchie", "James Gosling", "Bjarne Stroustrup", "Guido van Rossum"],
-    correctAnswer: 0
-  },
-  {
-    question: "Which symbol ends a statement in C?",
-    options: [":", ".", ";", ","],
-    correctAnswer: 2
-  },
-  {
-    question: "Array index starts from:",
-    options: ["0", "1", "-1", "Any value"],
-    correctAnswer: 0
-  },
-
-  // OOP
-  {
-    question: "OOP stands for:",
-    options: ["Object Oriented Programming", "Open Object Program", "Original Output Program", "None"],
-    correctAnswer: 0
-  },
-  {
-    question: "Which feature supports code reusability?",
-    options: ["Encapsulation", "Polymorphism", "Inheritance", "Abstraction"],
-    correctAnswer: 2
-  },
-
-  // Data structures
-  {
-    question: "Stack works on:",
-    options: ["FIFO", "LIFO", "LILO", "FILO"],
-    correctAnswer: 1
-  },
-  {
-    question: "Queue works on:",
-    options: ["LIFO", "FILO", "FIFO", "LILO"],
-    correctAnswer: 2
-  },
-
-  // Unit 3
-  {
-    question: "Python was developed by:",
-    options: ["Dennis Ritchie", "James Gosling", "Guido van Rossum", "Bjarne Stroustrup"],
-    correctAnswer: 2
-  },
-  {
-    question: "Which symbol is used for comments in Python?",
-    options: ["//", "<!-- -->", "#", "**"],
-    correctAnswer: 2
-  },
-  {
-    question: "DBMS stands for:",
-    options: ["Data Binary Management System", "Database Management System", "Digital Base Management System", "Data Backup Management System"],
-    correctAnswer: 1
-  },
-  {
-    question: "SQL stands for:",
-    options: ["Structured Query Language", "Simple Query Language", "Sequential Query Language", "Standard Query Link"],
-    correctAnswer: 0
-  }
+// ===== QUESTION BANK =====
+const masterBank = [
+  {q:"2+2=?", o:["2","3","4","5"], a:2},
+  {q:"5*2=?", o:["5","10","15","20"], a:1},
+  {q:"Capital of India?", o:["Delhi","Mumbai","Chennai","Kolkata"], a:0},
+  {q:"HTML stands for?", o:["Hyper Text Markup Language","High Tool","Home Tool","None"], a:0},
+  {q:"CSS is used for?", o:["Styling","Logic","Database","Server"], a:0},
+  {q:"JS is?", o:["Language","Database","OS","None"], a:0},
+  {q:"10/2=?", o:["2","3","5","6"], a:2},
+  {q:"Square of 4?", o:["8","12","16","20"], a:2},
+  {q:"Binary of 2?", o:["10","11","01","00"], a:0},
+  {q:"RAM is?", o:["Storage","Volatile memory","CPU","None"], a:1}
 ];
 
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-const quizData = shuffleArray([...questionPool]).slice(0, 50);
-let currentQuestion = 0;
-let userAnswers = Array(quizData.length).fill(null);
+// ===== GLOBALS =====
+let activeSet = [];
+let answers = [];
+let index = 0;
+let time = 600;
 let timerInterval;
-let timeLeft = 5400;
-const totalQuestions = 50;
-let startTime;
-let endTime;
-let filterMode = 'all';
-const landingPage = document.getElementById('landing-page');
-const quizContainer = document.getElementById('quiz-container');
-const resultsContainer = document.getElementById('results-container');
-const startQuizBtn = document.getElementById('start-quiz-btn');
-const prevBtn = document.getElementById('prev-btn');
-const nextBtn = document.getElementById('next-btn');
-const submitBtn = document.getElementById('submit-btn');
-const restartQuizBtn = document.getElementById('restart-quiz-btn');
-const questionText = document.getElementById('question-text');
-const optionsContainer = document.getElementById('options-container');
-const currentQuestionDisplay = document.getElementById('current-question');
-const totalQuestionsDisplay = document.getElementById('total-questions');
-const progressBarInner = document.getElementById('progress-bar-inner');
-const timeDisplay = document.getElementById('time-display');
-const timer = document.getElementById('timer');
-const scoreDisplay = document.getElementById('score-display');
-const maxScoreDisplay = document.getElementById('max-score');
-const percentageDisplay = document.getElementById('percentage-display');
-const timeTakenDisplay = document.getElementById('time-taken');
-const answersReview = document.getElementById('answers-review');
-const showAllBtn = document.getElementById('show-all-btn');
-const showCorrectBtn = document.getElementById('show-correct-btn');
-const showIncorrectBtn = document.getElementById('show-incorrect-btn');
-function initQuiz() {
-totalQuestionsDisplay.textContent = quizData.length;
-updateQuestion();
-updateNavButtons();
+
+// ===== START EXAM =====
+function startExam(set) {
+
+  clearInterval(timerInterval); // FIX
+
+  time = 600; // reset time
+
+  activeSet = [...masterBank].sort(() => Math.random()-0.5);
+  activeSet = activeSet.slice(0, Math.min(10, activeSet.length));
+
+  answers = new Array(activeSet.length).fill(null);
+  index = 0;
+
+  document.getElementById("landing").classList.add("hidden");
+  document.getElementById("exam").classList.remove("hidden");
+
+  render();
+
+  timerInterval = setInterval(updateTimer,1000);
 }
-function updateQuestion() {
-const question = quizData[currentQuestion];
-questionText.textContent = question.question;
-optionsContainer.innerHTML = '';
-question.options.forEach((option, index) => {
-const optionDiv = document.createElement('div');
-optionDiv.className = 'custom-radio';
-const input = document.createElement('input');
-input.type = 'radio';
-input.id = `option-${index + 1}`;
-input.name = 'answer';
-input.value = index;
-if (userAnswers[currentQuestion] === index) {
-input.checked = true;
+
+// ===== RENDER =====
+function render() {
+
+  const q = activeSet[index];
+
+  document.getElementById("qNum").innerText =
+    `Question ${index+1}/${activeSet.length}`;
+
+  document.getElementById("question").innerText = q.q;
+
+  const optDiv = document.getElementById("options");
+  optDiv.innerHTML = "";
+
+  q.o.forEach((opt,i)=>{
+    const div = document.createElement("div");
+    div.className="custom-radio";
+
+    div.innerHTML = `
+      <input type="radio" name="q" id="o${i}" ${answers[index]==i?'checked':''}>
+      <label for="o${i}">${opt}</label>
+    `;
+
+    div.onclick = () => {
+      answers[index] = i;
+      render();
+    };
+
+    optDiv.appendChild(div);
+  });
+
+  document.getElementById("submitBtn").classList.toggle(
+    "hidden", index !== activeSet.length-1
+  );
+
+  document.getElementById("nextBtn").classList.toggle(
+    "hidden", index === activeSet.length-1
+  );
 }
-const label = document.createElement('label');
-label.htmlFor = `option-${index + 1}`;
-label.className = 'text-gray-700 hover:text-gray-900';
-label.textContent = option;
-optionDiv.appendChild(input);
-optionDiv.appendChild(label);
-optionsContainer.appendChild(optionDiv);
-input.addEventListener('change', function() {
-userAnswers[currentQuestion] = parseInt(this.value);
-});
-});
-currentQuestionDisplay.textContent = currentQuestion + 1;
-const progress = ((currentQuestion + 1) / quizData.length) * 100;
-progressBarInner.style.width = `${progress}%`;
+
+// ===== NAVIGATION =====
+function nav(dir) {
+  index += dir;
+
+  if(index < 0) index = 0;
+  if(index >= activeSet.length) index = activeSet.length-1;
+
+  render();
 }
-function updateNavButtons() {
-prevBtn.style.visibility = currentQuestion === 0 ? 'hidden' : 'visible';
-if (currentQuestion === quizData.length - 1) {
-nextBtn.classList.add('hidden');
-submitBtn.classList.remove('hidden');
-} else {
-nextBtn.classList.remove('hidden');
-submitBtn.classList.add('hidden');
+
+// ===== TIMER =====
+function updateTimer() {
+  time--;
+
+  let m = Math.floor(time/60);
+  let s = time%60;
+
+  document.getElementById("timer").innerText =
+    `${m}:${s<10?'0':''}${s}`;
+
+  if(time <= 0) finish();
 }
+
+// ===== FINISH =====
+function finish() {
+
+  clearInterval(timerInterval);
+
+  let score = 0;
+
+  activeSet.forEach((q,i)=>{
+    if(answers[i] === q.a) score++;
+  });
+
+  document.getElementById("exam").classList.add("hidden");
+  document.getElementById("result").classList.remove("hidden");
+
+  document.getElementById("score").innerText =
+    `Score: ${score}/${activeSet.length}`;
 }
-function startTimer() {
-startTime = new Date();
-timerInterval = setInterval(function() {
-timeLeft--;
-if (timeLeft <= 0) {
-clearInterval(timerInterval);
-submitQuiz();
-} else {
-updateTimerDisplay();
-if (timeLeft <= 60) {
-timer.classList.add('timer-warning');
-timeDisplay.classList.add('text-red-600');
-}
-}
-}, 1000);
-updateTimerDisplay();
-}
-function updateTimerDisplay() {
-const minutes = Math.floor(timeLeft / 60);
-const seconds = timeLeft % 60;
-timeDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-}
-function showResults() {
-endTime = new Date();
-const timeTaken = Math.floor((endTime - startTime) / 1000);
-const minutes = Math.floor(timeTaken / 60);
-const seconds = timeTaken % 60;
-let score = 0;
-userAnswers.forEach((answer, index) => {
-if (answer === quizData[index].correctAnswer) {
-score++;
-}
-});
-const percentage = Math.round((score / quizData.length) * 100);
-scoreDisplay.textContent = score;
-maxScoreDisplay.textContent = quizData.length;
-percentageDisplay.textContent = percentage;
-timeTakenDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-generateAnswerReviews();
-quizContainer.classList.add('hidden');
-resultsContainer.classList.remove('hidden');
-}
-function generateAnswerReviews() {
-answersReview.innerHTML = '';
-quizData.forEach((question, index) => {
-const isCorrect = userAnswers[index] === question.correctAnswer;
-if ((filterMode === 'all') ||
-(filterMode === 'correct' && isCorrect) ||
-(filterMode === 'incorrect' && !isCorrect)) {
-const reviewDiv = document.createElement('div');
-reviewDiv.className = `answer-review ${isCorrect ? 'correct' : 'incorrect'} bg-white rounded-lg p-6 shadow-sm border border-gray-100`;
-const questionHeader = document.createElement('div');
-questionHeader.className = 'flex items-center justify-between mb-4';
-const questionNumber = document.createElement('div');
-questionNumber.className = 'text-sm font-medium text-gray-500';
-questionNumber.textContent = `Question ${index + 1}`;
-const statusBadge = document.createElement('div');
-if (isCorrect) {
-statusBadge.className = 'px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium';
-statusBadge.textContent = 'Correct';
-} else {
-statusBadge.className = 'px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-medium';
-statusBadge.textContent = 'Incorrect';
-}
-questionHeader.appendChild(questionNumber);
-questionHeader.appendChild(statusBadge);
-const questionContent = document.createElement('div');
-questionContent.className = 'mb-4';
-const questionTitle = document.createElement('h3');
-questionTitle.className = 'text-lg font-medium text-gray-900 mb-3';
-questionTitle.textContent = question.question;
-questionContent.appendChild(questionTitle);
-const answersList = document.createElement('div');
-answersList.className = 'space-y-2';
-question.options.forEach((option, optionIndex) => {
-const answerItem = document.createElement('div');
-answerItem.className = 'flex items-center';
-let answerClass = 'text-gray-700';
-let iconClass = '';
-if (optionIndex === question.correctAnswer) {
-answerClass = 'text-green-700 font-medium';
-iconClass = 'ri-check-line text-green-600';
-} else if (optionIndex === userAnswers[index] && userAnswers[index] !== question.correctAnswer) {
-answerClass = 'text-red-700 font-medium';
-iconClass = 'ri-close-line text-red-600';
-}
-if (iconClass) {
-const icon = document.createElement('div');
-icon.className = 'w-5 h-5 flex items-center justify-center mr-2';
-const i = document.createElement('i');
-i.className = iconClass;
-icon.appendChild(i);
-answerItem.appendChild(icon);
-} else {
-const spacer = document.createElement('div');
-spacer.className = 'w-7';
-answerItem.appendChild(spacer);
-}
-const answerText = document.createElement('span');
-answerText.className = answerClass;
-answerText.textContent = option;
-answerItem.appendChild(answerText);
-answersList.appendChild(answerItem);
-});
-questionContent.appendChild(answersList);
-reviewDiv.appendChild(questionHeader);
-reviewDiv.appendChild(questionContent);
-answersReview.appendChild(reviewDiv);
-}
-});
-}
-function submitQuiz() {
-clearInterval(timerInterval);
-showResults();
-}
-startQuizBtn.addEventListener('click', function() {
-const quizData = shuffleArray([...questionPool]).slice(0, 50);
-userAnswers = Array(quizData.length).fill(null);
-landingPage.classList.add('hidden');
-quizContainer.classList.remove('hidden');
-initQuiz();
-startTimer();
-});
-prevBtn.addEventListener('click', function() {
-if (currentQuestion > 0) {
-currentQuestion--;
-updateQuestion();
-updateNavButtons();
-}
-});
-nextBtn.addEventListener('click', function() {
-if (currentQuestion < quizData.length - 1) {
-currentQuestion++;
-updateQuestion();
-updateNavButtons();
-}
-});
-submitBtn.addEventListener('click', submitQuiz);
-restartQuizBtn.addEventListener('click', function() {
-currentQuestion = 0;
-userAnswers = Array(quizData.length).fill(null);
-timeLeft = 5400;
-filterMode = 'all';
-timer.classList.remove('timer-warning');
-timeDisplay.classList.remove('text-red-600');
-showAllBtn.classList.add('bg-primary', 'text-white');
-showAllBtn.classList.remove('bg-white', 'text-gray-700', 'border-gray-300', 'border');
-showCorrectBtn.classList.remove('bg-primary', 'text-white');
-showCorrectBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'border-y', 'border-r');
-showIncorrectBtn.classList.remove('bg-primary', 'text-white');
-showIncorrectBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'border-y', 'border-r');
-resultsContainer.classList.add('hidden');
-landingPage.classList.remove('hidden');
-});
-showAllBtn.addEventListener('click', function() {
-filterMode = 'all';
-generateAnswerReviews();
-showAllBtn.classList.add('bg-primary', 'text-white');
-showAllBtn.classList.remove('bg-white', 'text-gray-700', 'border-gray-300', 'border');
-showCorrectBtn.classList.remove('bg-primary', 'text-white');
-showCorrectBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'border-y', 'border-r');
-showIncorrectBtn.classList.remove('bg-primary', 'text-white');
-showIncorrectBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'border-y', 'border-r');
-});
-showCorrectBtn.addEventListener('click', function() {
-filterMode = 'correct';
-generateAnswerReviews();
-showCorrectBtn.classList.add('bg-primary', 'text-white');
-showCorrectBtn.classList.remove('bg-white', 'text-gray-700', 'border-gray-300', 'border-y', 'border-r');
-showAllBtn.classList.remove('bg-primary', 'text-white');
-showAllBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'border');
-showIncorrectBtn.classList.remove('bg-primary', 'text-white');
-showIncorrectBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'border-y', 'border-r');
-});
-showIncorrectBtn.addEventListener('click', function() {
-filterMode = 'incorrect';
-generateAnswerReviews();
-showIncorrectBtn.classList.add('bg-primary', 'text-white');
-showIncorrectBtn.classList.remove('bg-white', 'text-gray-700', 'border-gray-300', 'border-y', 'border-r');
-showAllBtn.classList.remove('bg-primary', 'text-white');
-showAllBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'border');
-showCorrectBtn.classList.remove('bg-primary', 'text-white');
-showCorrectBtn.classList.add('bg-white', 'text-gray-700', 'border-gray-300', 'border-y', 'border-r');
-});
-document.addEventListener('keydown', function(event) {
-if (quizContainer.classList.contains('hidden')) return;
-if (event.key === 'ArrowLeft' && currentQuestion > 0) {
-prevBtn.click();
-} else if (event.key === 'ArrowRight' && currentQuestion < quizData.length - 1) {
-nextBtn.click();
-} else if (event.key === 'Enter' && currentQuestion === quizData.length - 1) {
-submitBtn.click();
-} else if (event.key >= '1' && event.key <= '4') {
-const optionIndex = parseInt(event.key) - 1;
-if (optionIndex >= 0 && optionIndex < quizData[currentQuestion].options.length) {
-const radioInput = document.querySelector(`#option-${optionIndex + 1}`);
-if (radioInput) {
-radioInput.checked = true;
-userAnswers[currentQuestion] = optionIndex;
-}
-}
-}
-});
-});
+
 </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9311f2664ef34514',t:'MTc0NDc4ODMwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+</body>
 </html>
