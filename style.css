@@ -1,0 +1,5 @@
+ body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .custom-radio input[type="radio"] { display: none; }
+        .custom-radio label { display: block; padding: 1.25rem; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; transition: all 0.2s; position: relative; }
+        .custom-radio input[type="radio"]:checked + label { border-color: #4f46e5; background-color: #f5f3ff; font-weight: 600; }
+        .custom-radio input[type="radio"]:checked + label::after { content: '\eb7b'; font-family: 'remixicon'; position: absolute; right: 1.25rem; color: #4f46e5; font-size: 1.25rem; }
